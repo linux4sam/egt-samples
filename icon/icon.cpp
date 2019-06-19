@@ -24,17 +24,17 @@ int main(int argc, const char** argv)
 
     auto NAV_WIDTH = 80;
 
-    ImageButton left(win, Image("arrow_left.png"), "", Rect(0, 0, NAV_WIDTH, win.h()));
+    ImageButton left(win, Image("arrow_left.png"), "", Rect(0, 0, NAV_WIDTH, win.height()));
     left.set_color(Palette::ColorId::bg, Palette::black);
     left.set_text_align(alignmask::center);
     left.set_align(alignmask::left);
 
-    ImageButton right(win, Image("arrow_right.png"), "", Rect(0, 0, NAV_WIDTH, win.h()));
+    ImageButton right(win, Image("arrow_right.png"), "", Rect(0, 0, NAV_WIDTH, win.height()));
     right.set_color(Palette::ColorId::bg, Palette::black);
     right.set_text_align(alignmask::center);
     right.set_align(alignmask::right);
 
-    ScrolledView view0(Rect(NAV_WIDTH, 0, win.w() - (NAV_WIDTH * 2), win.h()));
+    ScrolledView view0(Rect(NAV_WIDTH, 0, win.width() - (NAV_WIDTH * 2), win.height()));
     view0.set_color(Palette::ColorId::bg, Palette::black);
     view0.set_name("view0");
     win.add(view0);
@@ -45,20 +45,20 @@ int main(int argc, const char** argv)
     right.on_event([&](Event&)
     {
         swipe.starting(view0.offset().x);
-        swipe.ending(view0.offset().x - view0.w());
+        swipe.ending(view0.offset().x - view0.width());
         swipe.start();
     }, {eventid::pointer_click});
 
     left.on_event([&](Event&)
     {
         swipe.starting(view0.offset().x);
-        swipe.ending(view0.offset().x + view0.w());
+        swipe.ending(view0.offset().x + view0.width());
         swipe.start();
     }, {eventid::pointer_click});
 
     std::vector<std::string> files = detail::glob(detail::resolve_file_path("icons/") + "*.png");
 
-    StaticGrid grid0(Rect(0, 0, files.size() / 6 * 160, win.h()), Tuple(files.size() / 6, 6));
+    StaticGrid grid0(Rect(0, 0, files.size() / 6 * 160, win.height()), Tuple(files.size() / 6, 6));
     grid0.set_name("grid0");
     view0.add(grid0);
 
@@ -76,7 +76,7 @@ int main(int argc, const char** argv)
     const Color FUCHSIA(Color::CSS("#F012BE"));
 
     Popup popup(Size(100, 40));
-    popup.move(Point(win.w() - 100 - 10 - NAV_WIDTH, 10));
+    popup.move(Point(win.width() - 100 - 10 - NAV_WIDTH, 10));
     popup.set_color(Palette::ColorId::bg, FUCHSIA);
     popup.set_name("popup");
 
