@@ -3,4 +3,5 @@ external \
 icon \
 infotain \
 drop \
-ragdoll
+ragdoll \
+chipdrop
