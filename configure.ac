@@ -30,5 +30,6 @@ PKG_CHECK_MODULES(LIBEGT, [libegt], [], [
 AC_CONFIG_FILES([Makefile
 		external/Makefile
 		icon/Makefile
-		infotain/Makefile])
+		infotain/Makefile
+		drop/Makefile])
 AC_OUTPUT
