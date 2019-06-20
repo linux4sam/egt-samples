@@ -31,5 +31,6 @@ AC_CONFIG_FILES([Makefile
 		external/Makefile
 		icon/Makefile
 		infotain/Makefile
-		drop/Makefile])
+		drop/Makefile
+		ragdoll/Makefile])
 AC_OUTPUT

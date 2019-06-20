@@ -2,4 +2,5 @@ SUBDIRS = \
 external \
 icon \
 infotain \
-drop
+drop \
+ragdoll
