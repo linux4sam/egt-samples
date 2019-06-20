@@ -1,3 +1,5 @@
 SUBDIRS = \
+external \
 icon \
-infotain
+infotain \
+drop

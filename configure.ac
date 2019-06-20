@@ -11,6 +11,10 @@ AM_INIT_AUTOMAKE([1.10 foreign subdir-objects])
 # Enable quiet compiles on automake 1.11.
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
+# Initialize libtool
+LT_PREREQ([2.2])
+LT_INIT([win32-dll])
+
 CXXFLAGS="$CXXFLAGS -std=c++11 -pedantic -g"
 CFLAGS="$CFLAGS -g"
 
@@ -24,6 +28,7 @@ PKG_CHECK_MODULES(LIBEGT, [libegt], [], [
 ])
 
 AC_CONFIG_FILES([Makefile
+		external/Makefile
 		icon/Makefile
 		infotain/Makefile])
 AC_OUTPUT
