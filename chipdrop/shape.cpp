@@ -10,7 +10,7 @@
 using namespace std;
 
 Shape::Shape(cpSpace* space, const Point& point)
-    : RotateRectangleWidget(Color::from_float(1. * drand48(),
+    : RotateRectangleWidget(Color::rgbaf(1. * drand48(),
                             1. * drand48(),
                             1. * drand48(),
                             1.0)),

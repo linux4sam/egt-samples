@@ -73,7 +73,7 @@ int main(int argc, const char** argv)
 
     win.show();
 
-    const Color FUCHSIA(Color::CSS("#F012BE"));
+    const Color FUCHSIA(Color::css("#F012BE"));
 
     Popup popup(Size(100, 40));
     popup.move(Point(win.width() - 100 - 10 - NAV_WIDTH, 10));
