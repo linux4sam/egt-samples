@@ -44,15 +44,15 @@ int main(int argc, const char** argv)
 
     right.on_event([&](Event&)
     {
-        swipe.starting(view0.offset().x);
-        swipe.ending(view0.offset().x - view0.width());
+        swipe.set_starting(view0.offset().x);
+        swipe.set_ending(view0.offset().x - view0.width());
         swipe.start();
     }, {eventid::pointer_click});
 
     left.on_event([&](Event&)
     {
-        swipe.starting(view0.offset().x);
-        swipe.ending(view0.offset().x + view0.width());
+        swipe.set_starting(view0.offset().x);
+        swipe.set_ending(view0.offset().x + view0.width());
         swipe.start();
     }, {eventid::pointer_click});
 

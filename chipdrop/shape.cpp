@@ -11,9 +11,9 @@ using namespace std;
 
 Shape::Shape(cpSpace* space, const Point& point)
     : RotateRectangleWidget(Color::rgbaf(1. * drand48(),
-                            1. * drand48(),
-                            1. * drand48(),
-                            1.0)),
+                                         1. * drand48(),
+                                         1. * drand48(),
+                                         1.0)),
       m_space(space)
 {
     const vector<int> widths = { 50, 25, 75 };
