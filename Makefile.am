@@ -4,4 +4,5 @@ icon \
 infotain \
 drop \
 ragdoll \
-chipdrop
+chipdrop \
+gallery

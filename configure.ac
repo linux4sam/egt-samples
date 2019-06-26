@@ -33,5 +33,6 @@ AC_CONFIG_FILES([Makefile
 		infotain/Makefile
 		drop/Makefile
 		ragdoll/Makefile
-		chipdrop/Makefile])
+		chipdrop/Makefile
+		gallery/Makefile])
 AC_OUTPUT
