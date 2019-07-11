@@ -60,7 +60,7 @@ struct Box2DWindow : public TopWindow
         label->set_font(font);
         add(egt::center(label));
 
-        m_world = create_world(to_meter(size().width), to_meter(size().height)) ;
+        m_world = create_world(to_meter(size().width()), to_meter(size().height())) ;
     }
 
     void handle(Event& event) override

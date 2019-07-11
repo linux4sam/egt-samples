@@ -48,9 +48,9 @@ public:
     virtual void draw(Painter& painter, const Rect&) override
     {
         auto cr = painter.context().get();
-        cairo_translate(cr, center().x, center().y);
+        cairo_translate(cr, center().x(), center().y());
         cairo_rotate(cr, m_angle);
-        cairo_translate(cr, -center().x, -center().y);
+        cairo_translate(cr, -center().x(), -center().y());
 
 	Rect drawbox(Point(), m_shapesize);
 	drawbox.move_to_center(center());

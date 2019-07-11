@@ -49,8 +49,8 @@ Shape::Shape(cpSpace* space, const Point& point)
     resize(superrect.size());
     move_to_center(superrect.center());
 
-    auto x = to_meter(box().x);
-    auto y = to_meter(480) - to_meter(box().y) - to_meter(superrect.height) * 0.5;
+    auto x = to_meter(box().x());
+    auto y = to_meter(480) - to_meter(box().y()) - to_meter(superrect.height()) * 0.5;
 
     m_body = createBoxElement(cpv(to_meter(width), to_meter(height)),
                               cpv(x, y));
