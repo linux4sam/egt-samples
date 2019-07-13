@@ -10,7 +10,7 @@ bin_PROGRAMS = gallery
 gallery_SOURCES = gallery.cpp
 gallery_CXXFLAGS = $(CUSTOM_CXXFLAGS) $(AM_CXXFLAGS)
 gallery_LDADD = $(CUSTOM_LDADD)
-gallerydir = $(prefix)/share/egt/examples/gallery
+gallerydir = $(prefix)/share/egt/samples/gallery
 dist_gallery_DATA = $(wildcard $(top_srcdir)/gallery/*.png) \
 	$(wildcard $(top_srcdir)/gallery/movies/*.png) \
 	$(wildcard $(top_srcdir)/gallery/movies/*.jpg)

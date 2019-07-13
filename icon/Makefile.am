@@ -10,6 +10,6 @@ bin_PROGRAMS = icon
 icon_SOURCES = icon.cpp
 icon_CXXFLAGS = $(CUSTOM_CXXFLAGS) $(AM_CXXFLAGS)
 icon_LDADD = $(CUSTOM_LDADD)
-icondir = $(prefix)/share/egt/examples/icon
+icondir = $(prefix)/share/egt/samples/icon
 dist_icon_DATA = $(wildcard $(top_srcdir)/icon/*.png)
 icon_LDFLAGS = $(AM_LDFLAGS)

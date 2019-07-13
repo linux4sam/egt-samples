@@ -11,5 +11,5 @@ bin_PROGRAMS = chipdrop
 chipdrop_SOURCES = chipdrop.cpp shape.cpp shape.h
 chipdrop_CXXFLAGS = $(CUSTOM_CXXFLAGS) $(AM_CXXFLAGS)
 chipdrop_LDADD = $(top_builddir)/external/libchipmunk2d.la $(CUSTOM_LDADD)
-chipdropdir = $(prefix)/share/egt/examples/chipdrop
+chipdropdir = $(prefix)/share/egt/samples/chipdrop
 chipdrop_LDFLAGS = $(AM_LDFLAGS)
