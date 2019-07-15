@@ -8,7 +8,7 @@ are for information purposes.
 First compile and install libegt to a directory.
 
 ```sh
-git clone --recursive https://bitbucket.microchip.com/scm/linux4sam/egt.git
+git clone --recursive https://github.com/linux4sam/egt.git
 cd egt
 ./autogen.sh
 ./configure --prefix=/opt/egt
@@ -19,7 +19,7 @@ make install
 Then, configure and build this samples project.
 
 ```sh
-git clone --recursive https://bitbucket.microchip.com/scm/linux4sam/egt-samples.git
+git clone --recursive https://github.com/linux4sam/egt-samples.git
 ./autogen.sh
 CXXFLAGS="-I/opt/egt/include/" \
 LDFLAGS="-L/opt/egt/lib/" \
