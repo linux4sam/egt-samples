@@ -27,6 +27,12 @@ PKG_CHECK_MODULES(LIBEGT, [libegt], [], [
    AC_MSG_ERROR(libegt not found.  This is required.)
 ])
 
+PKG_CHECK_MODULES(JSONCPP, [jsoncpp], [have_jsoncpp=yes], [have_jsoncpp=no])
+if test "x${have_jsoncpp}" = xyes; then
+   AC_DEFINE(HAVE_JSONCPP, 1, [Have jsoncpp support])
+fi
+AM_CONDITIONAL([HAVE_JSONCPP], [test "x${have_jsoncpp}" = xyes])
+
 AC_CONFIG_FILES([Makefile
 		external/Makefile
 		icon/Makefile
@@ -34,5 +40,6 @@ AC_CONFIG_FILES([Makefile
 		drop/Makefile
 		ragdoll/Makefile
 		chipdrop/Makefile
-		gallery/Makefile])
+		gallery/Makefile
+		weather/Makefile])
 AC_OUTPUT
