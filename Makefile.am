@@ -20,4 +20,6 @@ newsfeed
 endif
 
 EXTRA_DIST = \
+	README.md \
+	COPYING \
 	rapidxml
