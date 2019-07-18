@@ -18,6 +18,8 @@ LT_INIT([win32-dll])
 CXXFLAGS="$CXXFLAGS -std=c++11 -pedantic -g"
 CFLAGS="$CFLAGS -g"
 
+AC_LANG(C++)
+
 AC_PROG_CXX
 AC_CHECK_HEADER_STDBOOL
 AC_C_INLINE
@@ -33,6 +35,9 @@ if test "x${have_jsoncpp}" = xyes; then
 fi
 AM_CONDITIONAL([HAVE_JSONCPP], [test "x${have_jsoncpp}" = xyes])
 
+AC_CHECK_HEADERS([egt/network/http.h], have_egt_network_http_h=yes, have_egt_network_http_h=no)
+AM_CONDITIONAL([HAVE_EGT_NETWORK_HTTP_H], [test "x${have_egt_network_http_h}" = xyes])
+
 AC_CONFIG_FILES([Makefile
 		external/Makefile
 		icon/Makefile
@@ -41,5 +46,8 @@ AC_CONFIG_FILES([Makefile
 		ragdoll/Makefile
 		chipdrop/Makefile
 		gallery/Makefile
-		weather/Makefile])
+		weather/Makefile
+		animations/Makefile
+		water/Makefile
+		newsfeed/Makefile])
 AC_OUTPUT
