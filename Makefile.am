@@ -7,7 +7,8 @@ ragdoll \
 chipdrop \
 gallery \
 water \
-animations
+animations \
+layout
 
 if HAVE_JSONCPP
 SUBDIRS += \

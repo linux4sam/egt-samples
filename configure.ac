@@ -49,5 +49,6 @@ AC_CONFIG_FILES([Makefile
 		weather/Makefile
 		animations/Makefile
 		water/Makefile
-		newsfeed/Makefile])
+		newsfeed/Makefile
+		layout/Makefile])
 AC_OUTPUT
