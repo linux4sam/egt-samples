@@ -1,7 +1,28 @@
+![Ensemble Graphics Toolkit](docs/logo.png)
+
 # EGT Sample Applications
 
-Sample applications using EGT.  These samples are mostly considered unstable and
-are for information purposes.
+Sample applications using and demonstrating the
+[Ensemble Graphics Toolkit (EGT)](https://github.com/linux4sam/egt).  These
+samples are mostly considered unstable and are for informational purposes.
+
+- animations - simple animations
+- chipdrop - interactive Chipmunk2D itegration example
+- drop - interactive Box2D integration example
+- gallery - navigate a gallery of images
+- icon - navigate EGT icons
+- infotain - basic infotainment system
+- layout - interactively work with layout properies of widgets
+- newsfeed - RSS feed reader
+- ragdoll - Box2D integration example
+- water - sprite animations
+- weather - download weather data and images
+
+![EGT Box2D Sample](docs/screenshot0.png "EGT Box2D Sample")
+
+![EGT Weather Sample](docs/screenshot1.png "EGT Weather Sample")
+
+![EGT Sprite Sample](docs/screenshot2.png "EGT Sprite Sample")
 
 # Compiling
 
