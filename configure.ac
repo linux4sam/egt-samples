@@ -38,6 +38,9 @@ AM_CONDITIONAL([HAVE_JSONCPP], [test "x${have_jsoncpp}" = xyes])
 AC_CHECK_HEADERS([egt/network/http.h], have_egt_network_http_h=yes, have_egt_network_http_h=no)
 AM_CONDITIONAL([HAVE_EGT_NETWORK_HTTP_H], [test "x${have_egt_network_http_h}" = xyes])
 
+AC_CHECK_HEADERS([egt/video.h], have_egt_video_h=yes, have_egt_video_h=no)
+AM_CONDITIONAL([HAVE_EGT_VIDEO_H], [test "x${have_egt_video_h}" = xyes])
+
 AC_CONFIG_FILES([Makefile
 		external/Makefile
 		icon/Makefile

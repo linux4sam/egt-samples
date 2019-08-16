@@ -5,7 +5,6 @@ infotain \
 drop \
 ragdoll \
 chipdrop \
-gallery \
 water \
 animations \
 layout
@@ -18,6 +17,11 @@ endif
 if HAVE_EGT_NETWORK_HTTP_H
 SUBDIRS += \
 newsfeed
+endif
+
+if HAVE_EGT_VIDEO_H
+SUBDIRS += \
+gallery
 endif
 
 EXTRA_DIST = \
