@@ -329,7 +329,7 @@ public:
             if (event.pointer().btn == Pointer::button::right)
             {
                 Point pos = display_to_local(event.pointer().point);
-                if (Rect::point_inside(pos, m_canvas->box()))
+                if (m_canvas->box().intersect(pos))
                 {
                     auto parent = dynamic_cast<Frame*>(m_canvas->hit_test(event.pointer().point));
                     if (parent && !parent->flags().is_set(Widget::flag::frame))

@@ -113,7 +113,7 @@ struct Box2DWindow : public TopWindow
         {
             (*i)->update();
 
-            bool visible = Rect::intersect(box(), (*i)->box());
+            bool visible = box().intersect((*i)->box());
             if (!visible)
             {
                 (*i)->detach();

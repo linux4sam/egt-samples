@@ -36,7 +36,7 @@ public:
 
     bool animate()
     {
-        bool visible = Rect::intersect(Rect(Point(0, 0), main_screen()->size()), box());
+        bool visible = Rect(Point(0, 0), main_screen()->size()).intersect(box());
 
         if (visible)
         {
