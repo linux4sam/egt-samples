@@ -1,5 +1,6 @@
 SUBDIRS = \
 external \
+brick \
 icon \
 infotain \
 drop \

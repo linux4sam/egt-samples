@@ -53,5 +53,6 @@ AC_CONFIG_FILES([Makefile
 		animations/Makefile
 		water/Makefile
 		newsfeed/Makefile
-		layout/Makefile])
+		layout/Makefile
+		brick/Makefile])
 AC_OUTPUT
