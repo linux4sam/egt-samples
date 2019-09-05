@@ -124,7 +124,16 @@ struct Box2DWindow : public TopWindow
         }
     }
 
-    virtual ~Box2DWindow() = default;
+    virtual ~Box2DWindow()
+    {
+        // The shapes are added as children, but to destruct a Shape,
+        // we need m_world around.  So, explicitly cleanup the shapes
+        // here (instead of in egt::Frame by default) where we still
+        // have m_world around.
+        for(auto& i : m_boxes)
+            i->detach();
+        m_boxes.clear();
+    }
 
 protected:
 

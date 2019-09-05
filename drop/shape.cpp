@@ -8,6 +8,7 @@
 #include <random>
 
 using namespace std;
+using namespace egt;
 
 Shape::Shape(b2World& world, const Point& point)
     : RotateRectangleWidget(Color::rgbaf(1. * drand48(),
