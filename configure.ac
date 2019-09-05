@@ -54,5 +54,6 @@ AC_CONFIG_FILES([Makefile
 		water/Makefile
 		newsfeed/Makefile
 		layout/Makefile
-		brick/Makefile])
+		brick/Makefile
+		AngryMeatballs/Makefile])
 AC_OUTPUT

@@ -1,5 +1,6 @@
 SUBDIRS = \
 external \
+AngryMeatballs \
 brick \
 icon \
 infotain \
