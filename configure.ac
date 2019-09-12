@@ -2,6 +2,7 @@ AC_PREREQ([2.69])
 AC_INIT([egt-samples], [0.1])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([Makefile.am])
+AC_CONFIG_MACRO_DIR([m4])
 AC_USE_SYSTEM_EXTENSIONS
 AC_CANONICAL_SYSTEM
 PKG_PROG_PKG_CONFIG
@@ -17,6 +18,9 @@ LT_INIT([win32-dll])
 
 CXXFLAGS="$CXXFLAGS -std=c++11 -pedantic -g"
 CFLAGS="$CFLAGS -g"
+
+AX_PTHREAD([LIBS="$PTHREAD_LIBS $LIBS"
+            CFLAGS="$CFLAGS $PTHREAD_CFLAGS"], AC_MSG_ERROR(Can not find pthreads.  This is required.))
 
 AC_LANG(C++)
 
