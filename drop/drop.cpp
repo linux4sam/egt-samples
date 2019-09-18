@@ -21,7 +21,7 @@ using namespace std;
 static unique_ptr<b2World> create_world(double width, double height)
 {
     auto gravity = -9.81;
-    auto world = make_unique<b2World>(b2Vec2(0, gravity));
+    auto world = detail::make_unique<b2World>(b2Vec2(0, gravity));
 
     b2Vec2 vs[3];
     vs[0].Set(0, height) ;
@@ -104,7 +104,7 @@ struct Box2DWindow : public TopWindow
 
     void update()
     {
-        experimental::code_timer(true, "step: ", [&]()
+        experimental::code_timer(false, "step: ", [&]()
         {
             m_world->Step((1.0 / 30), 10, 10);
         });

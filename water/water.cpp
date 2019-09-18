@@ -63,12 +63,7 @@ public:
         : TopWindow(Size()),
           e1(r())
     {
-        set_boxtype(Theme::boxtype::none);
-
-        m_background = make_shared<ImageLabel>(Image("water.png"));
-        add(m_background);
-        m_background->set_align(alignmask::expand);
-        m_background->set_image_align(alignmask::expand);
+        set_background(Image("water.png"));
 
         m_label = make_shared<Label>("Objects: 0",
                                      Rect(Point(10, 10),
@@ -145,7 +140,6 @@ public:
     }
 
     vector<shared_ptr<Bubble>> m_images;
-    shared_ptr<ImageLabel> m_background;
     shared_ptr<Label> m_label;
     shared_ptr<Sprite> m_sprite;
 

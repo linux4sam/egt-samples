@@ -15,7 +15,7 @@ using namespace std;
 static unique_ptr<b2World> create_world(double width, double height)
 {
 	auto gravity = -9.81;
-	auto world = make_unique<b2World>(b2Vec2(0, gravity));
+	auto world = detail::make_unique<b2World>(b2Vec2(0, gravity));
 
 	// create a 'box' to hold the objects
 	b2Vec2 vs[4];
@@ -47,8 +47,7 @@ static unique_ptr<b2World> create_world(double width, double height)
 
 MainWindow::MainWindow()
 {
-    auto background = make_shared<ImageLabel>(Image("background.png"));
-    add(background);
+	set_background(Image("background.png"));
 
 	set_color(Palette::ColorId::bg, Palette::black);
 	auto label = make_shared<Label>("Box2D Physics", alignmask::center);

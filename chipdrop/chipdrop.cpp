@@ -97,7 +97,7 @@ struct Box2DWindow : public TopWindow
 
     void update()
     {
-        experimental::code_timer(true, "step: ", [&]()
+        experimental::code_timer(false, "step: ", [&]()
         {
             cpFloat timeStep = 1.0 / 30.0;
             cpSpaceStep(m_space, timeStep);

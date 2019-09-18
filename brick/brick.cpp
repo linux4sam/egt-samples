@@ -27,10 +27,7 @@ public:
           m_label("-", alignmask::left | alignmask::center),
           e1(random())
     {
-        auto background = make_shared<ImageLabel>(Image("brick_background.png"));
-        add(background);
-        background->set_align(alignmask::expand);
-        background->set_image_align(alignmask::expand);
+        set_background(Image("brick_background.png"));
 
         add(m_grid1);
         add(m_grid2);
@@ -63,12 +60,12 @@ public:
 
         add(m_paddle);
 
+        m_ball.flags().set(Widget::flag::no_autoresize);
         m_ball.resize(Size(Ratio<int>(width(), 5), Ratio<int>(width(), 5)));
         m_ball.set_image_align(alignmask::expand);
         add(m_ball);
 
-        m_label.set_color(Palette::ColorId::text, Palette::white);
-        m_label.set_color(Palette::ColorId::bg, Palette::transparent);
+        m_label.set_color(Palette::ColorId::label_text, Palette::white);
         add(top(left(m_label)));
 
         reset_game();
