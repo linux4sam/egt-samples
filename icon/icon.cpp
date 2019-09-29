@@ -58,7 +58,7 @@ int main(int argc, const char** argv)
 
     std::vector<std::string> files = detail::glob(detail::resolve_file_path("icons/") + "*.png");
 
-    StaticGrid grid0(Rect(0, 0, files.size() / 6 * 160, win.height()), Tuple(files.size() / 6, 6));
+    StaticGrid grid0(Rect(0, 0, files.size() / 6 * 160, win.height()), std::make_tuple(files.size() / 6, 6));
     grid0.set_name("grid0");
     view0.add(grid0);
 

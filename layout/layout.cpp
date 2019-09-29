@@ -115,7 +115,7 @@ shared_ptr<Widget> create_widget<ScrolledView>()
 template <>
 shared_ptr<Widget> create_widget<StaticGrid>()
 {
-    auto instance = make_shared<StaticGrid>(Tuple(2, 2), 1);
+    auto instance = make_shared<StaticGrid>(std::make_tuple(2, 2), 1);
     instance->resize(Size(200, 200));
     instance->set_border(instance->theme().default_border());
     return static_pointer_cast<Widget>(instance);
@@ -124,7 +124,7 @@ shared_ptr<Widget> create_widget<StaticGrid>()
 template <>
 shared_ptr<Widget> create_widget<SelectableGrid>()
 {
-    auto instance = make_shared<SelectableGrid>(Tuple(2, 2), 1);
+    auto instance = make_shared<SelectableGrid>(std::make_tuple(2, 2), 1);
     instance->resize(Size(200, 200));
     instance->set_border(instance->theme().default_border());
     return static_pointer_cast<Widget>(instance);
@@ -245,13 +245,13 @@ public:
             auto s = combo->item_at(combo->selected());
 
             if (s == "Default")
-                set_global_theme(new Theme());
+                set_global_theme(std::make_shared<Theme>());
             else if (s == "Midnight")
-                set_global_theme(new MidnightTheme());
+                set_global_theme(std::make_shared<MidnightTheme>());
             else if (s == "Sky")
-                set_global_theme(new SkyTheme());
+                set_global_theme(std::make_shared<SkyTheme>());
             else if (s == "Shamrock")
-                set_global_theme(new ShamrockTheme());
+                set_global_theme(std::make_shared<ShamrockTheme>());
 
             this->damage();
         }, {eventid::property_changed});
@@ -259,7 +259,7 @@ public:
         auto hsizer = make_shared<BoxSizer>(orientation::horizontal);
         vsizer->add(expand(hsizer));
 
-        m_grid = make_shared<SelectableGrid>(Tuple(3, 10), 5);
+        m_grid = make_shared<SelectableGrid>(std::make_tuple(3, 10), 5);
         m_grid->set_horizontal_ratio(15);
         m_grid->resize(Size(200, 0));
         hsizer->add(expand_vertical(m_grid));

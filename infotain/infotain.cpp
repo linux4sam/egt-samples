@@ -111,7 +111,7 @@ static void top_menu(Window& win)
 
 static void bottom_menu(Window& win)
 {
-    auto grid2 = std::make_shared<StaticGrid>(win, Rect(Point(0, 390), Size(800, 90)), Tuple(5, 1), 4);
+    auto grid2 = std::make_shared<StaticGrid>(win, Rect(Point(0, 390), Size(800, 90)), std::make_tuple(5, 1), 4);
     grid2->set_color(Palette::ColorId::border, Palette::transparent);
 
     auto bb1 = std::make_shared<MyButton>("audio_s.png", _("Audio"), 0, 0);
@@ -135,7 +135,7 @@ class MainWindow : public TopWindow
 public:
     explicit MainWindow(const Size& size)
         : TopWindow(size),
-          grid(Rect(Point(0, 60), Size(800, 330)), Tuple(4, 2), 10)
+          grid(Rect(Point(0, 60), Size(800, 330)), std::make_tuple(4, 2), 10)
     {
         set_color(Palette::ColorId::bg, Palette::lightblue);
 

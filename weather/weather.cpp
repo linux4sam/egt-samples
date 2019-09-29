@@ -126,7 +126,7 @@ int main(int argc, const char** argv)
     img->set_image_align(alignmask::expand);
     win.add(img);
 
-    StaticGrid grid(Rect(0, 0, 400, 250), Tuple(1, 5), 10);
+    StaticGrid grid(Rect(0, 0, 400, 250), std::make_tuple(1, 5), 10);
     win.add(grid);
     grid.set_align(alignmask::center | alignmask::right);
 

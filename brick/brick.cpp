@@ -15,13 +15,13 @@ using namespace egt;
 class GameWindow : public TopWindow
 {
 public:
-    static constexpr int ROWS = 2;
+    static const int ROWS;
 
     GameWindow()
         : m_grid1(Rect(Point(0, 50), Size(width(), 80)),
-                  Tuple(width() / 100, ROWS), 5),
+                  std::make_tuple(width() / 100, ROWS), 5),
           m_grid2(Rect(Point(0, 50 + 80 + 30), Size(width(), 80)),
-                  Tuple(width() / 100, ROWS), 5),
+                  std::make_tuple(width() / 100, ROWS), 5),
           m_ball(Image("small_ball.png")),
           m_paddle(Image("paddle.png")),
           m_label("-", alignmask::left | alignmask::center),
@@ -215,6 +215,8 @@ private:
     std::random_device random;
     std::default_random_engine e1;
 };
+
+const int GameWindow::ROWS = 2;
 
 int main(int argc, const char** argv)
 {
