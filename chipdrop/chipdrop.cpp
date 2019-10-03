@@ -3,15 +3,16 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-#include "shape.h"
 #include "chipmunk/chipmunk.h"
+#include "shape.h"
 #include <cairo.h>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
+#include <egt/detail/meta.h>
 #include <egt/ui>
 #include <iostream>
-#include <map>
+#include <memory>
 #include <unistd.h>
 #include <vector>
 
@@ -97,7 +98,7 @@ struct Box2DWindow : public TopWindow
 
     void update()
     {
-        experimental::code_timer(false, "step: ", [&]()
+        detail::code_timer(false, "step: ", [&]()
         {
             cpFloat timeStep = 1.0 / 30.0;
             cpSpaceStep(m_space, timeStep);

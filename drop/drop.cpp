@@ -9,9 +9,10 @@
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
+#include <egt/detail/meta.h>
 #include <egt/ui>
 #include <iostream>
-#include <map>
+#include <memory>
 #include <unistd.h>
 #include <vector>
 
@@ -104,7 +105,7 @@ struct Box2DWindow : public TopWindow
 
     void update()
     {
-        experimental::code_timer(false, "step: ", [&]()
+        detail::code_timer(false, "step: ", [&]()
         {
             m_world->Step((1.0 / 30), 10, 10);
         });
