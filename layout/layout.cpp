@@ -273,7 +273,7 @@ public:
 
         m_canvas = make_shared<Frame>();
         m_canvas->set_border(global_theme().default_border());
-        m_canvas->set_boxtype(Theme::boxtype::blank);
+        m_canvas->set_boxtype(Theme::boxtype::fill);
         m_canvas->set_align(alignmask::expand);
         m_canvas->set_horizontal_ratio(80);
         m_canvas->show();

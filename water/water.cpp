@@ -36,7 +36,7 @@ public:
 
     bool animate()
     {
-        bool visible = Rect(Point(0, 0), main_screen()->size()).intersect(box());
+        bool visible = Rect(Point(0, 0), Application::instance().screen()->size()).intersect(box());
 
         if (visible)
         {
@@ -215,7 +215,7 @@ int main(int argc, const char** argv)
     spawntimer.start();
 
 #ifdef SPRITE1
-    PropertyAnimator a1(-sprite1.size().width(), main_screen()->size().width(),
+    PropertyAnimator a1(-sprite1.size().width(), Application::instance().screen()->size().width(),
                         std::chrono::milliseconds(10000),
                         easing_linear);
     a1.on_change(std::bind(&Sprite::set_x, std::ref(sprite1), std::placeholders::_1));
@@ -235,7 +235,7 @@ int main(int argc, const char** argv)
 #endif
 
 #ifdef SPRITE2
-    PropertyAnimator a2(-sprite2.size().width(), main_screen()->size().width(),
+    PropertyAnimator a2(-sprite2.size().width(), Application::instance().screen()->size().width(),
                         std::chrono::milliseconds(12000),
                         easing_linear);
     a2.on_change(std::bind(&Sprite::set_x, std::ref(sprite2), std::placeholders::_1));
