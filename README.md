@@ -41,6 +41,7 @@ Then, configure and build this samples project.
 
 ```sh
 git clone --recursive https://github.com/linux4sam/egt-samples.git
+cd egt-samples
 ./autogen.sh
 CXXFLAGS="-I/opt/egt/include/" \
 LDFLAGS="-L/opt/egt/lib/" \
