@@ -6,7 +6,6 @@
 #include <cmath>
 #include <cstdio>
 #include <egt/detail/filesystem.h>
-#include <egt/detail/imagecache.h>
 #include <egt/ui>
 #include <iostream>
 #include <map>
@@ -21,7 +20,7 @@ int main(int argc, const char** argv)
 {
     Application app(argc, argv, "gallery");
 
-    std::vector<std::string> files = detail::glob(detail::resolve_file_path("movies/") + "*trailer*.jpg");
+    std::vector<std::string> files = detail::glob(resolve_file_path("movies/") + "*trailer*.jpg");
 
     TopWindow win;
     win.set_name("win");
