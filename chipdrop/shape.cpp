@@ -85,5 +85,5 @@ void Shape::update()
     Point p(x, 480 - y - height() * .5);
 
     move(p);
-    set_angle(-angle);
+    this->angle(-angle);
 }

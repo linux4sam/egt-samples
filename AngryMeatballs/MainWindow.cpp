@@ -47,15 +47,15 @@ static unique_ptr<b2World> create_world(double width, double height)
 
 MainWindow::MainWindow()
 {
-	set_background(Image("background.png"));
+	background(Image("background.png"));
 
-	set_color(Palette::ColorId::bg, Palette::black);
-	auto label = make_shared<Label>("Box2D Physics", alignmask::center);
-        label->set_font(Font(40));
-	label->set_color(Palette::ColorId::text, Palette::black);
-        label->set_color(Palette::ColorId::bg, Palette::transparent);
+	color(Palette::ColorId::bg, Palette::black);
+	auto label = make_shared<Label>("Box2D Physics", AlignFlag::center_horizontal | AlignFlag::center_vertical);
+        label->font(Font(40));
+	label->color(Palette::ColorId::text, Palette::black);
+        label->color(Palette::ColorId::bg, Palette::transparent);
 	add(label);
-	egt::align(label, egt::alignmask::top | egt::alignmask::center);
+	egt::align(label, egt::AlignFlag::top | egt::AlignFlag::center_horizontal | AlignFlag::center_vertical);
 
 	m_world = create_world(to_meter(size().width()), to_meter(size().height() - 55));
 
@@ -69,7 +69,7 @@ void MainWindow::handle(Event& event)
 
 	switch (event.id())
 	{
-		case eventid::pointer_hold:
+		case EventId::pointer_hold:
 		{
 			auto mouse = display_to_local(event.pointer().point);
 			auto shape = make_shared<Ball>(*m_world, mouse);
@@ -81,7 +81,7 @@ void MainWindow::handle(Event& event)
 			shape->toss();
 			break;
 		}
-		case eventid::pointer_click:
+		case EventId::pointer_click:
 		{
 			auto mouse = display_to_local(event.pointer().point);
 			auto shape = make_shared<Ball>(*m_world, mouse);
@@ -91,7 +91,7 @@ void MainWindow::handle(Event& event)
 			m_objects.push_back(shape);
 			break;
 		}
-		case eventid::pointer_dblclick:
+		case EventId::pointer_dblclick:
 		{
 			for(auto i = m_objects.begin(); i != m_objects.end(); ++i)
 				(*i)->detach();

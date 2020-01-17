@@ -8,7 +8,6 @@ drop \
 ragdoll \
 chipdrop \
 water \
-animations \
 layout
 
 if HAVE_EGT_NETWORK_HTTP_H

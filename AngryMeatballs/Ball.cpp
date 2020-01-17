@@ -31,7 +31,7 @@ Ball::Ball(b2World& world, const Point& point) :
 	int ball_size = uniform_dist(e1);
 	auto image = Image(image_names[ball_size].c_str());
 
-	set_image(image);
+	this->image(image);
 
 	resize(m_shapeSize);
 	move_to_center(point);
@@ -58,7 +58,7 @@ void Ball::update()
 	Point p(x, 480 - 55 - y);
 
 	move_to_center(p);
-	set_angle(-angle);
+	this->angle(-angle);
 
 	auto end_time = std::chrono::steady_clock::now();
 

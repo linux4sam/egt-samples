@@ -29,6 +29,14 @@ AC_CHECK_HEADER_STDBOOL
 AC_C_INLINE
 AC_TYPE_UINT32_T
 
+AC_ARG_ENABLE(rtti,
+  AS_HELP_STRING([--disable-rtti], [Disable RTTI]))
+AM_CONDITIONAL(DISABLE_RTTI, test x"$enable_rtti" = x"no")
+if test x"$enable_rtti" = x"no"; then
+  AC_DEFINE(DISABLE_RTTI, 1, [define if not using RTTI])
+  CXXFLAGS="$CXXFLAGS -fno-rtti"
+fi
+
 PKG_CHECK_MODULES(LIBEGT, [libegt], [], [
    AC_MSG_ERROR(libegt not found.  This is required.)
 ])
@@ -59,5 +67,6 @@ AC_CONFIG_FILES([Makefile
 		newsfeed/Makefile
 		layout/Makefile
 		brick/Makefile
+		mqtt/Makefile
 		AngryMeatballs/Makefile])
 AC_OUTPUT

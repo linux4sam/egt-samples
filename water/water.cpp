@@ -25,7 +25,7 @@ public:
           m_xspeed(xspeed),
           m_yspeed(yspeed)
     {
-        flags().set(Widget::flag::no_layout);
+        flags().set(Widget::Flag::no_layout);
     }
 
     Bubble(const Bubble&) = default;
@@ -63,18 +63,18 @@ public:
         : TopWindow(Size()),
           e1(r())
     {
-        set_background(Image("water.png"));
+        background(Image("water.png"));
 
         m_label = make_shared<Label>("Objects: 0",
                                      Rect(Point(10, 10),
                                           Size(150, 40)),
-                                     alignmask::left | alignmask::center);
-        m_label->set_color(Palette::ColorId::text, Palette::white);
-        m_label->set_color(Palette::ColorId::bg, Palette::transparent);
+                                     AlignFlag::left | AlignFlag::center_horizontal | AlignFlag::center_vertical);
+        m_label->color(Palette::ColorId::text, Palette::white);
+        m_label->color(Palette::ColorId::bg, Palette::transparent);
         add(top(left(m_label)));
 
         m_sprite = make_shared<Sprite>(Image("diver.png"), Size(390, 312), 16, Point(0, 0));
-        m_sprite->flags().set(Widget::flag::no_layout);
+        m_sprite->flags().set(Widget::Flag::no_layout);
         add(m_sprite);
         m_sprite->show();
     }
@@ -85,7 +85,7 @@ public:
 
         switch (event.id())
         {
-        case eventid::raw_pointer_move:
+        case EventId::raw_pointer_move:
             spawn(display_to_local(event.pointer().point));
             break;
         default:
@@ -97,7 +97,7 @@ public:
     {
         auto xspeed = 0;
         auto yspeed = speed_dist(e1);
-        auto offset = offset_dist(e1);
+        auto offset = offdist(e1);
         auto size = size_dist(e1);
 
         // has to move at some speed
@@ -107,7 +107,7 @@ public:
         m_images.emplace_back(make_shared<Bubble>(xspeed, yspeed, p));
         auto& image = m_images.back();
         add(image);
-        image->set_image_align(alignmask::expand);
+        image->image_align(AlignFlag::expand_horizontal | AlignFlag::expand_vertical);
         image->resize_by_ratio(size);
         image->move(Point(p.x() - image->box().width() / 2 + offset,
                           p.y() - image->box().height() / 2 + offset));
@@ -136,7 +136,7 @@ public:
     {
         ostringstream ss;
         ss << "Objects: " << m_images.size();
-        m_label->set_text(ss.str());
+        m_label->text(ss.str());
     }
 
     vector<shared_ptr<Bubble>> m_images;
@@ -146,7 +146,7 @@ public:
     std::random_device r;
     std::default_random_engine e1;
     std::uniform_int_distribution<int> speed_dist{-20, -1};
-    std::uniform_int_distribution<int> offset_dist{-20, 20};
+    std::uniform_int_distribution<int> offdist{-20, 20};
     std::uniform_int_distribution<int> size_dist{10, 100};
 };
 
@@ -161,7 +161,7 @@ int main(int argc, const char** argv)
 #define SPRITE1
 #ifdef SPRITE1
     Sprite sprite1(Image("fish.png"), Size(252, 209), 8, Point(0, 0));
-    sprite1.flags().set(Widget::flag::no_layout);
+    sprite1.flags().set(Widget::Flag::no_layout);
     win.add(sprite1);
     sprite1.show();
     sprites.push_back(&sprite1);
@@ -170,7 +170,7 @@ int main(int argc, const char** argv)
 #define SPRITE2
 #ifdef SPRITE2
     Sprite sprite2(Image("fish2.png"), Size(100, 87), 6, Point(0, 0));
-    sprite2.flags().set(Widget::flag::no_layout);
+    sprite2.flags().set(Widget::Flag::no_layout);
     win.add(sprite2);
     sprite2.show();
     sprites.push_back(&sprite2);
@@ -199,15 +199,15 @@ int main(int argc, const char** argv)
         if (win.m_images.size() > 30)
             return;
 
-        static std::uniform_int_distribution<int> xoffset_dist(-win.width() / 2, win.width() / 2);
-        int offset = xoffset_dist(win.e1);
+        static std::uniform_int_distribution<int> xoffdist(-win.width() / 2, win.width() / 2);
+        int offset = xoffdist(win.e1);
 
         static std::uniform_int_distribution<int> count_dist(1, 10);
         int count = count_dist(win.e1);
 
         Point p(win.box().center());
-        p.set_y(win.box().height());
-        p.set_x(p.x() + offset);
+        p.y(win.box().height());
+        p.x(p.x() + offset);
 
         while (count--)
             win.spawn(p);
@@ -218,15 +218,17 @@ int main(int argc, const char** argv)
     PropertyAnimator a1(-sprite1.size().width(), Application::instance().screen()->size().width(),
                         std::chrono::milliseconds(10000),
                         easing_linear);
-    a1.on_change(std::bind(&Sprite::set_x, std::ref(sprite1), std::placeholders::_1));
+    a1.on_change([&sprite1](PropertyAnimator::Value value){
+            sprite1.x(value);
+        });
     a1.start();
 
     PeriodicTimer floattimer(std::chrono::milliseconds(1000 * 12));
     floattimer.on_timeout([&a1, &sprite1, &win]()
     {
 
-        static std::uniform_int_distribution<int> yoffset_dist(0, win.height() - sprite1.size().height());
-        int y = yoffset_dist(win.e1);
+        static std::uniform_int_distribution<int> yoffdist(0, win.height() - sprite1.size().height());
+        int y = yoffdist(win.e1);
 
         sprite1.move(Point(-sprite1.size().width(), y));
         a1.start();
@@ -238,14 +240,16 @@ int main(int argc, const char** argv)
     PropertyAnimator a2(-sprite2.size().width(), Application::instance().screen()->size().width(),
                         std::chrono::milliseconds(12000),
                         easing_linear);
-    a2.on_change(std::bind(&Sprite::set_x, std::ref(sprite2), std::placeholders::_1));
+    a2.on_change([&sprite2](PropertyAnimator::Value value){
+            sprite2.x(value);
+        });
     a2.start();
 
     PeriodicTimer floattimer2(std::chrono::milliseconds(1000 * 15));
     floattimer2.on_timeout([&a2, &sprite2, &win]()
     {
-        static std::uniform_int_distribution<int> yoffset_dist(0, win.height() - sprite2.size().height());
-        int y = yoffset_dist(win.e1);
+        static std::uniform_int_distribution<int> yoffdist(0, win.height() - sprite2.size().height());
+        int y = yoffdist(win.e1);
 
         sprite2.move(Point(-sprite2.size().width(), y));
         a2.start();
@@ -254,8 +258,8 @@ int main(int argc, const char** argv)
 #endif
 
     Label label1("CPU: ----");
-    label1.set_color(Palette::ColorId::text, Palette::white);
-    label1.set_color(Palette::ColorId::bg, Palette::transparent);
+    label1.color(Palette::ColorId::text, Palette::white);
+    label1.color(Palette::ColorId::bg, Palette::transparent);
     win.add(bottom(left(label1)));
 
     experimental::CPUMonitorUsage tools;
@@ -265,7 +269,7 @@ int main(int argc, const char** argv)
         tools.update();
         ostringstream ss;
         ss << "CPU: " << static_cast<int>(tools.usage(0)) << "%";
-        label1.set_text(ss.str());
+        label1.text(ss.str());
     });
     cputimer.start();
 

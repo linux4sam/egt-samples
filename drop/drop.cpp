@@ -55,10 +55,10 @@ struct Box2DWindow : public TopWindow
     Box2DWindow()
     {
         auto label = make_shared<Label>("EGT Box2D Physics",
-                                        alignmask::center);
+                                        AlignFlag::center_horizontal | AlignFlag::center_vertical);
         auto font = label->font();
-        font.set_size(40);
-        label->set_font(font);
+        font.size(40);
+        label->font(font);
         add(egt::center(label));
 
         m_world = create_world(to_meter(size().width()), to_meter(size().height())) ;
@@ -70,7 +70,7 @@ struct Box2DWindow : public TopWindow
 
         switch (event.id())
         {
-        case eventid::pointer_hold:
+        case EventId::pointer_hold:
         {
             auto mouse = display_to_local(event.pointer().point);
             auto shape = make_shared<Shape>(*m_world, mouse);
@@ -82,7 +82,7 @@ struct Box2DWindow : public TopWindow
             shape->toss();
             break;
         }
-        case eventid::pointer_click:
+        case EventId::pointer_click:
         {
             auto mouse = display_to_local(event.pointer().point);
             auto shape = make_shared<Shape>(*m_world, mouse);
@@ -92,7 +92,7 @@ struct Box2DWindow : public TopWindow
             m_boxes.push_back(shape);
             break;
         }
-        case eventid::pointer_dblclick:
+        case EventId::pointer_dblclick:
             for (auto i = m_boxes.begin(); i != m_boxes.end(); ++i)
                 (*i)->detach();
             m_boxes.clear();
@@ -105,10 +105,7 @@ struct Box2DWindow : public TopWindow
 
     void update()
     {
-        detail::code_timer(false, "step: ", [&]()
-        {
-            m_world->Step((1.0 / 30), 10, 10);
-        });
+        m_world->Step((1.0 / 30), 10, 10);
 
         for (auto i = m_boxes.begin(); i != m_boxes.end();)
         {

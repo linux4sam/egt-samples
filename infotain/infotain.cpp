@@ -28,8 +28,8 @@ public:
              int y = 0)
         : ImageButton(Image(filename), label, Rect(Point(x, y), Size()))
     {
-        set_image_align(alignmask::left);
-        set_text_align(alignmask::center | alignmask::bottom);
+        image_align(AlignFlag::left);
+        text_align(AlignFlag::center_horizontal | AlignFlag::center_vertical | AlignFlag::bottom);
     }
 };
 
@@ -70,9 +70,9 @@ static void top_menu(Window& win)
 
     auto i1 = std::make_shared<HomeImage>(win, "home.png", 5, 5);
 
-    auto l1 = std::make_shared<Label>(win, "", Rect(Point(320, 0), Size(100, 60)), alignmask::center);
-    l1->set_color(Palette::ColorId::text, Palette::white);
-    l1->set_color(Palette::ColorId::bg, Palette::transparent);
+    auto l1 = std::make_shared<Label>(win, "", Rect(Point(320, 0), Size(100, 60)), AlignFlag::center_horizontal | AlignFlag::center_vertical);
+    l1->color(Palette::ColorId::text, Palette::white);
+    l1->color(Palette::ColorId::bg, Palette::transparent);
 
     struct TimeTimer : public PeriodicTimer
     {
@@ -90,7 +90,7 @@ static void top_menu(Window& win)
 
             ostringstream ss;
             ss << local_tm.tm_hour << ":" << std::setfill('0') << std::setw(2) << local_tm.tm_min;
-            m_label.set_text(ss.str());
+            m_label.text(ss.str());
         }
 
         Label& m_label;
@@ -100,9 +100,9 @@ static void top_menu(Window& win)
 
     timer->start();
 
-    auto l2 = std::make_shared<Label>("48°", Rect(Point(420, 0), Size(100, 60)), alignmask::center);
-    l2->set_color(Palette::ColorId::text, Palette::white);
-    l2->set_color(Palette::ColorId::bg, Palette::transparent);
+    auto l2 = std::make_shared<Label>("48°", Rect(Point(420, 0), Size(100, 60)), AlignFlag::center_horizontal | AlignFlag::center_vertical);
+    l2->color(Palette::ColorId::text, Palette::white);
+    l2->color(Palette::ColorId::bg, Palette::transparent);
     win.add(l2);
 
     auto i2 = std::make_shared<ImageLabel>(Image("wifi.png"), "", Rect(Point(800 - 50, 10), Size()));
@@ -112,7 +112,7 @@ static void top_menu(Window& win)
 static void bottom_menu(Window& win)
 {
     auto grid2 = std::make_shared<StaticGrid>(win, Rect(Point(0, 390), Size(800, 90)), std::make_tuple(5, 1), 4);
-    grid2->set_color(Palette::ColorId::border, Palette::transparent);
+    grid2->color(Palette::ColorId::border, Palette::transparent);
 
     auto bb1 = std::make_shared<MyButton>("audio_s.png", _("Audio"), 0, 0);
     grid2->add(expand(bb1), 0, 0);
@@ -137,9 +137,9 @@ public:
         : TopWindow(size),
           grid(Rect(Point(0, 60), Size(800, 330)), std::make_tuple(4, 2), 10)
     {
-        set_color(Palette::ColorId::bg, Palette::lightblue);
+        color(Palette::ColorId::bg, Palette::lightblue);
 
-        grid.set_color(Palette::ColorId::border, Palette::transparent);
+        grid.color(Palette::ColorId::border, Palette::transparent);
 
         add(grid);
 

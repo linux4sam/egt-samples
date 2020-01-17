@@ -55,19 +55,19 @@ public:
     NewsItem(const std::string& title, const std::string& desc,
              const std::string& date, const std::string& link,
              const std::string& image)
-        : VerticalBoxSizer(justification::start),
+        : VerticalBoxSizer(Justification::start),
           m_line(*this),
           m_title(*this, truncate(title, 80)),
           m_date(*this, date),
           m_desc(*this, truncate(desc, 80)),
           m_link(*this, truncate(link, 80))
     {
-        m_title.set_font(Font(20, Font::weightid::bold));
-        m_date.set_font(Font(Font::slantid::oblique));
-        m_link.set_font(Font(10));
-        m_link.set_color(Palette::ColorId::label_text, Palette::blue);
+        m_title.font(Font(20, Font::Weight::bold));
+        m_date.font(Font(Font::Slant::oblique));
+        m_link.font(Font(10));
+        m_link.color(Palette::ColorId::label_text, Palette::blue);
 
-        set_align(alignmask::expand_horizontal);
+        align(AlignFlag::expand_horizontal);
 
         if (!image.empty())
         {
@@ -89,7 +89,7 @@ public:
             });
         }
 
-        m_line.set_padding(10);
+        m_line.padding(10);
         expand_horizontal(m_line);
         //expand_horizontal(m_title);
         //expand_horizontal(m_date);
@@ -175,7 +175,7 @@ int main(int argc, const char** argv)
 
     TopWindow win;
 
-    ScrolledView view(win, ScrolledView::policy::never);
+    ScrolledView view(win, ScrolledView::Policy::never);
     expand(view);
 
     VerticalBoxSizer list(view);

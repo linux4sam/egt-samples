@@ -65,13 +65,12 @@ static void download_image(StaticGrid* grid, const std::string& url)
             if (surface)
             {
                 auto image = make_shared<ImageLabel>(Image(surface));
-                image->set_boxtype(Theme::boxtype::none);
-                image->set_align(alignmask::expand);
+                image->boxtype().clear();
+                image->align(AlignFlag::expand_horizontal | AlignFlag::expand_vertical);
                 grid->add(image);
             }
         }
     });
-
 }
 
 template <typename T>
@@ -122,24 +121,24 @@ int main(int argc, const char** argv)
     TopWindow win;
     auto i = Image("background.jpg");
     auto img = make_shared<ImageLabel>(i);
-    img->set_align(alignmask::expand);
-    img->set_image_align(alignmask::expand);
+    img->align(AlignFlag::expand_horizontal | AlignFlag::expand_vertical);
+    img->image_align(AlignFlag::expand_horizontal | AlignFlag::expand_vertical);
     win.add(img);
 
     StaticGrid grid(Rect(0, 0, 400, 250), std::make_tuple(1, 5), 10);
     win.add(grid);
-    grid.set_align(alignmask::center | alignmask::right);
+    grid.align(AlignFlag::center_horizontal | AlignFlag::center_vertical | AlignFlag::right);
 
     auto text = city;
     if (!country.empty())
         text += "," + country;
 
     auto title = make_shared<Label>(text);
-    title->set_font(Font(title->font().face(),
+    title->font(Font(title->font().face(),
                          title->font().size() + 5,
                          title->font().weight(),
                          title->font().slant()));
-    title->set_align(alignmask::center);
+    title->align(AlignFlag::center_horizontal | AlignFlag::center_vertical);
     grid.add(title);
 
     download(url, [&grid](const HttpClientRequest::buffer_type & data)
@@ -170,22 +169,22 @@ int main(int argc, const char** argv)
         }
 
         auto dtlabel = make_shared<Label>(utc_string(dt));
-        dtlabel->set_align(alignmask::center);
+        dtlabel->align(AlignFlag::center_horizontal | AlignFlag::center_vertical);
         grid.add(dtlabel);
 
         if (temp > 0.)
         {
             auto label = make_shared<Label>(float_to_string(temp) + "°");
-            label->set_align(alignmask::center);
-            label->set_font(Font(label->font().face(),
+            label->align(AlignFlag::center_horizontal | AlignFlag::center_vertical);
+            label->font(Font(label->font().face(),
                                  label->font().size(),
-                                 Font::weightid::bold,
+                                 Font::Weight::bold,
                                  label->font().slant()));
             grid.add(label);
         }
 
         auto label = make_shared<Label>(description.empty() ? "unable to get weather" : description);
-        label->set_align(alignmask::center);
+        label->align(AlignFlag::center_horizontal | AlignFlag::center_vertical);
         grid.add(label);
 
         // download the weather icon

@@ -24,15 +24,15 @@ public:
                   std::make_tuple(width() / 100, ROWS), 5),
           m_ball(Image("small_ball.png")),
           m_paddle(Image("paddle.png")),
-          m_label("-", alignmask::left | alignmask::center),
+          m_label("-", AlignFlag::left | AlignFlag::center_horizontal | AlignFlag::center_vertical),
           e1(random())
     {
-        set_background(Image("brick_background.png"));
+        background(Image("brick_background.png"));
 
         add(m_grid1);
         add(m_grid2);
-        m_grid1.set_color(Palette::ColorId::border, Palette::transparent);
-        m_grid2.set_color(Palette::ColorId::border, Palette::transparent);
+        m_grid1.color(Palette::ColorId::border, Palette::transparent);
+        m_grid2.color(Palette::ColorId::border, Palette::transparent);
 
         for (int c = 0; c < width() / 100; c++)
         {
@@ -60,12 +60,12 @@ public:
 
         add(m_paddle);
 
-        m_ball.flags().set(Widget::flag::no_autoresize);
+        m_ball.flags().set(Widget::Flag::no_autoresize);
         m_ball.resize(Size(Ratio<int>(width(), 5), Ratio<int>(width(), 5)));
-        m_ball.set_image_align(alignmask::expand);
+        m_ball.image_align(AlignFlag::expand_horizontal | AlignFlag::expand_vertical);
         add(m_ball);
 
-        m_label.set_color(Palette::ColorId::label_text, Palette::white);
+        m_label.color(Palette::ColorId::label_text, Palette::white);
         add(top(left(m_label)));
 
         reset_game();
@@ -78,17 +78,17 @@ public:
 
         switch (event.id())
         {
-        case eventid::keyboard_repeat:
-        case eventid::keyboard_down:
+        case EventId::keyboard_repeat:
+        case EventId::keyboard_down:
         {
             if (event.key().keycode == EKEY_LEFT || event.key().keycode == EKEY_RIGHT)
             {
                 int x;
                 m_running = true;
                 if (event.key().keycode == EKEY_LEFT)
-                    x = m_paddle.x() - (event.id() == eventid::keyboard_repeat ? 15 : 10);
+                    x = m_paddle.x() - (event.id() == EventId::keyboard_repeat ? 15 : 10);
                 else
-                    x = m_paddle.x() + (event.id() == eventid::keyboard_repeat ? 15 : 10);
+                    x = m_paddle.x() + (event.id() == EventId::keyboard_repeat ? 15 : 10);
 
                 if (x > -m_paddle.width() && x < width())
                     m_paddle.move(Point(x, m_paddle.y()));
@@ -109,10 +109,10 @@ public:
             }
             break;
         }
-        case eventid::raw_pointer_down:
+        case EventId::raw_pointer_down:
             m_running = true;
             break;
-        case eventid::raw_pointer_move:
+        case EventId::raw_pointer_move:
             m_paddle.move(Point(event.pointer().point.x() - m_paddle.width() / 2, m_paddle.y()));
             event.stop();
             break;
@@ -136,7 +136,7 @@ public:
 
         ostringstream ss;
         ss << "Points: " << m_points;
-        m_label.set_text(ss.str());
+        m_label.text(ss.str());
 
         m_running = false;
     }
@@ -147,7 +147,7 @@ public:
 
         ostringstream ss;
         ss << "Points: " << m_points;
-        m_label.set_text(ss.str());
+        m_label.text(ss.str());
     }
 
     void animate()

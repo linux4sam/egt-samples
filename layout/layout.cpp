@@ -10,10 +10,11 @@
 #include <egt/detail/serialize.h>
 #include <egt/form.h>
 #include <egt/shapes.h>
-#include <egt/themes/sky.h>
 #include <egt/themes/midnight.h>
 #include <egt/themes/shamrock.h>
+#include <egt/themes/sky.h>
 #include <egt/ui>
+#include <egt/uiloader.h>
 #include <memory>
 
 using namespace egt;
@@ -100,7 +101,7 @@ template <>
 shared_ptr<Widget> create_widget<ImageLabel>()
 {
     auto instance = make_shared<ImageLabel>(Image("icons/image_default.png"));
-    instance->set_image_align(alignmask::expand);
+    instance->image_align(AlignFlag::expand_horizontal | AlignFlag::expand_vertical);
     return static_pointer_cast<Widget>(instance);
 }
 
@@ -117,7 +118,7 @@ shared_ptr<Widget> create_widget<StaticGrid>()
 {
     auto instance = make_shared<StaticGrid>(std::make_tuple(2, 2), 1);
     instance->resize(Size(200, 200));
-    instance->set_border(instance->theme().default_border());
+    instance->border(instance->theme().default_border());
     return static_pointer_cast<Widget>(instance);
 }
 
@@ -126,7 +127,7 @@ shared_ptr<Widget> create_widget<SelectableGrid>()
 {
     auto instance = make_shared<SelectableGrid>(std::make_tuple(2, 2), 1);
     instance->resize(Size(200, 200));
-    instance->set_border(instance->theme().default_border());
+    instance->border(instance->theme().default_border());
     return static_pointer_cast<Widget>(instance);
 }
 
@@ -134,7 +135,7 @@ template <>
 shared_ptr<Widget> create_widget<Slider>()
 {
     auto instance = make_shared<Slider>();
-    instance->set_value(10);
+    instance->value(10);
     return static_pointer_cast<Widget>(instance);
 }
 
@@ -190,11 +191,11 @@ shared_ptr<Widget> create_option(std::function<void(T)> set,
                                  std::function<T()> get)
 {
     auto x = make_shared<TextBox>(std::to_string(get()));
-    x->on_event([x, set](Event&)
+    x->on_text_changed([x, set]()
     {
         if (!x->text().empty())
             set(std::stoi(x->text()));
-    }, {eventid::property_changed});
+    });
     return static_pointer_cast<Widget>(x);
 }
 
@@ -203,11 +204,11 @@ shared_ptr<Widget> create_option(std::function<void(string)> set,
                                  std::function<string()> get)
 {
     auto x = make_shared<TextBox>(get());
-    x->on_event([x, set](Event&)
+    x->on_text_changed([x, set]()
     {
         if (!x->text().empty())
             set(x->text());
-    }, {eventid::property_changed});
+    });
     return static_pointer_cast<Widget>(x);
 }
 
@@ -217,15 +218,15 @@ public:
 
     MainWindow()
     {
-        auto vsizer = make_shared<BoxSizer>(orientation::vertical);
+        auto vsizer = make_shared<BoxSizer>(Orientation::vertical);
         add(expand(vsizer));
 
         auto frame = make_shared<Frame>(Size(0, 60));
         vsizer->add(expand_horizontal(frame));
 
         auto logo = make_shared<ImageLabel>(Image("@128px/egt_logo_black.png"));
-        logo->set_margin(1);
-        logo->set_align(alignmask::center);
+        logo->margin(1);
+        logo->align(AlignFlag::center_horizontal | AlignFlag::center_vertical);
         frame->add(logo);
 
         ComboBox::item_array combo_items =
@@ -236,50 +237,50 @@ public:
             "Shamrock"
         };
         auto combo = make_shared<ComboBox>(combo_items);
-        combo->set_align(alignmask::center_vertical | alignmask::right);
-        combo->set_margin(5);
+        combo->align(AlignFlag::center_vertical | AlignFlag::right);
+        combo->margin(5);
         frame->add(combo);
 
-        combo->on_event([combo, this](Event&)
+        combo->on_selected_changed([combo, this]()
         {
             auto s = combo->item_at(combo->selected());
 
             if (s == "Default")
-                set_global_theme(std::make_shared<Theme>());
+                global_theme(detail::make_unique<Theme>());
             else if (s == "Midnight")
-                set_global_theme(std::make_shared<MidnightTheme>());
+                global_theme(detail::make_unique<MidnightTheme>());
             else if (s == "Sky")
-                set_global_theme(std::make_shared<SkyTheme>());
+                global_theme(detail::make_unique<SkyTheme>());
             else if (s == "Shamrock")
-                set_global_theme(std::make_shared<ShamrockTheme>());
+                global_theme(detail::make_unique<ShamrockTheme>());
 
             this->damage();
-        }, {eventid::property_changed});
+        });
 
-        auto hsizer = make_shared<BoxSizer>(orientation::horizontal);
-        vsizer->add(expand(hsizer));
+        m_hsizer = make_shared<BoxSizer>(Orientation::horizontal);
+        vsizer->add(expand(m_hsizer));
 
         m_grid = make_shared<SelectableGrid>(std::make_tuple(3, 10), 5);
-        m_grid->set_horizontal_ratio(15);
+        m_grid->horizontal_ratio(15);
         m_grid->resize(Size(200, 0));
-        hsizer->add(expand_vertical(m_grid));
+        m_hsizer->add(expand_vertical(m_grid));
 
         for (auto& w : widgets)
         {
             auto btn = make_shared<ImageButton>(Image(w.icon));
-            btn->set_boxtype(Theme::boxtype::none);
+            btn->boxtype().clear();
             m_grid->add(egt::center(btn));
         }
 
-        m_canvas = make_shared<Frame>();
-        m_canvas->set_border(global_theme().default_border());
-        m_canvas->set_boxtype(Theme::boxtype::fill);
-        m_canvas->set_align(alignmask::expand);
-        m_canvas->set_horizontal_ratio(80);
+        m_canvas = make_shared<Window>();
+        m_canvas->border(global_theme().default_border());
+        m_canvas->boxtype(Theme::BoxFlag::fill);
+        m_canvas->align(AlignFlag::expand_horizontal | AlignFlag::expand_vertical);
+        m_canvas->horizontal_ratio(80);
         m_canvas->show();
-        hsizer->add(m_canvas);
+        m_hsizer->add(m_canvas);
 
-        m_canvas->set_special_child_draw_callback([](Painter & painter, Widget * widget)
+        m_canvas->special_child_draw_callback([](Painter & painter, Widget * widget)
         {
             Painter::AutoSaveRestore sr3(painter);
             auto cr = painter.context().get();
@@ -290,15 +291,16 @@ public:
             painter.set(Palette::blue);
             static const double dashed[] = {1.0};
             cairo_set_dash(cr, dashed, 1, 0);
-            painter.set_line_width(2);
+            painter.line_width(2);
             cairo_stroke(cr);
         });
 
         m_form = make_shared<Form>("Properties");
-        m_form->resize(Size(200, 0));
-        m_form->set_align(alignmask::expand_vertical);
-        m_form->set_horizontal_ratio(100);
-        hsizer->add(m_form);
+        m_form->resize(Size(250, 0));
+        m_form->align(AlignFlag::expand_vertical);
+        // todo: not working
+        //m_form->horizontal_ratio(100);
+        m_hsizer->add(m_form);
 
         Input::global_input().on_event([this](Event & event)
         {
@@ -315,7 +317,20 @@ public:
             default:
                 break;
             }
-        }, {eventid::keyboard_down});
+        }, {EventId::keyboard_down});
+
+        auto save = make_shared<Button>("Save");
+        save->align(AlignFlag::center_vertical | AlignFlag::left);
+        save->margin(5);
+        frame->add(save);
+
+        save->on_click([this](Event&){
+                XmlWidgetSerializer xml;
+                m_canvas->walk(std::bind(&XmlWidgetSerializer::add, std::ref(xml),
+                                         std::placeholders::_1, std::placeholders::_2));
+                xml.write("ui.xml");
+                xml.write(cout);
+            });
     }
 
     void handle(Event& event) override
@@ -324,15 +339,15 @@ public:
 
         switch (event.id())
         {
-        case eventid::pointer_click:
+        case EventId::pointer_click:
         {
-            if (event.pointer().btn == Pointer::button::right)
+            if (event.pointer().btn == Pointer::Button::right)
             {
                 Point pos = display_to_local(event.pointer().point);
                 if (m_canvas->box().intersect(pos))
                 {
-                    auto parent = dynamic_cast<Frame*>(m_canvas->hit_test(event.pointer().point));
-                    if (parent && !parent->flags().is_set(Widget::flag::frame))
+                    auto parent = static_cast<Frame*>(m_canvas->hit_test(event.pointer().point));
+                    if (parent && !parent->flags().is_set(Widget::Flag::frame))
                         parent = nullptr;
                     auto p = m_grid->selected();
                     auto index = p.x() + 3 * p.y();
@@ -355,124 +370,112 @@ public:
 
         m_form->add_group("Widget");
         m_form->add_option("Name",
-                           create_option<string>(std::bind(&Widget::set_name, widget, std::placeholders::_1),
-                                   std::bind(&Widget::name, widget)));
+                           create_option<string>([widget](const std::string& v) { widget->name(v); },
+                                                 [widget]() { return widget->name(); }));
         m_form->add_option("X",
-                           create_option<int>(std::bind(&Widget::set_x, widget, std::placeholders::_1),
-                                              std::bind(&Widget::x, widget)));
+                           create_option<int>([widget](int v) { widget->x(v); },
+                                              [widget]() { return widget->x(); }));
         m_form->add_option("Y",
-                           create_option<int>(std::bind(&Widget::set_y, widget, std::placeholders::_1),
-                                              std::bind(&Widget::y, widget)));
+                           create_option<int>([widget](int v) { widget->y(v); },
+                                              [widget]() { return widget->y(); }));
         m_form->add_option("Width",
-                           create_option<int>(std::bind(&Widget::set_width, widget, std::placeholders::_1),
-                                              std::bind(&Widget::width, widget)));
+                           create_option<int>([widget](int v) { widget->width(v); },
+                                              [widget]() { return widget->width(); }));
         m_form->add_option("Height",
-                           create_option<int>(std::bind(&Widget::set_height, widget, std::placeholders::_1),
-                                              std::bind(&Widget::height, widget)));
+                           create_option<int>([widget](int v) { widget->height(v); },
+                                              [widget]() { return widget->height(); }));
         m_form->add_option("Border",
-                           create_option<int>(std::bind(&Widget::set_border, widget, std::placeholders::_1),
-                                              std::bind(&Widget::border, widget)));
+                           create_option<int>([widget](int v) { widget->border(v); },
+                                              [widget]() { return widget->border(); }));
         m_form->add_option("Margin",
-                           create_option<int>(std::bind(&Widget::set_margin, widget, std::placeholders::_1),
-                                              std::bind(&Widget::margin, widget)));
+                           create_option<int>([widget](int v) { widget->margin(v); },
+                                              [widget]() { return widget->margin(); }));
         m_form->add_option("Padding",
-                           create_option<int>(std::bind(&Widget::set_padding, widget, std::placeholders::_1),
-                                              std::bind(&Widget::padding, widget)));
+                           create_option<int>([widget](int v) { widget->padding(v); },
+                                              [widget]() { return widget->padding(); }));
         m_form->add_option("X Ratio",
-                           create_option<int>(std::bind(&Widget::set_xratio, widget, std::placeholders::_1),
-                                              std::bind(&Widget::xratio, widget)));
+                           create_option<int>([widget](int v) { widget->xratio(v); },
+                                              [widget]() { return widget->xratio(); }));
         m_form->add_option("Y Ratio",
-                           create_option<int>(std::bind(&Widget::set_yratio, widget, std::placeholders::_1),
-                                              std::bind(&Widget::yratio, widget)));
+                           create_option<int>([widget](int v) { widget->yratio(v); },
+                                              [widget]() { return widget->yratio(); }));
         m_form->add_option("H Ratio",
-                           create_option<int>(std::bind(&Widget::set_horizontal_ratio, widget, std::placeholders::_1),
-                                              std::bind(&Widget::horizontal_ratio, widget)));
+                           create_option<int>([widget](int v) { widget->horizontal_ratio(v); },
+                                              [widget]() { return widget->horizontal_ratio(); }));
         m_form->add_option("V Ratio",
-                           create_option<int>(std::bind(&Widget::set_vertical_ratio, widget, std::placeholders::_1),
-                                              std::bind(&Widget::vertical_ratio, widget)));
+                           create_option<int>([widget](int v) { widget->vertical_ratio(v); },
+                                              [widget]() { return widget->vertical_ratio(); }));
 
         auto left = make_shared<CheckBox>("left");
-        if ((widget->align() & alignmask::left) == alignmask::left)
-            left->set_checked(true);
-        left->on_event([widget, left](Event&)
+        if (widget->align().is_set(AlignFlag::left))
+            left->checked(true);
+        left->on_checked_changed([widget, left]()
         {
             if (left->checked())
-                widget->set_align(widget->align() | alignmask::left);
+                widget->align(widget->align() | AlignFlag::left);
             else
-                widget->set_align(widget->align() & ~alignmask::left);
-        }, {eventid::property_changed});
+                widget->align().clear(AlignFlag::left);
+        });
         m_form->add_option(left);
 
         auto right = make_shared<CheckBox>("right");
-        if ((widget->align() & alignmask::right) == alignmask::right)
-            right->set_checked(true);
-        right->on_event([widget, right](Event&)
+        if (widget->align().is_set(AlignFlag::right))
+            right->checked(true);
+        right->on_checked_changed([widget, right]()
         {
             if (right->checked())
-                widget->set_align(widget->align() | alignmask::right);
+                widget->align(widget->align() | AlignFlag::right);
             else
-                widget->set_align(widget->align() & ~alignmask::right);
-        }, {eventid::property_changed});
+                widget->align().clear(AlignFlag::right);
+        });
         m_form->add_option(right);
 
-        auto center = make_shared<CheckBox>("center");
-        if ((widget->align() & alignmask::center) == alignmask::center)
-            center->set_checked(true);
-        center->on_event([widget, center](Event&)
-        {
-            if (center->checked())
-                widget->set_align(widget->align() | alignmask::center);
-            else
-                widget->set_align(widget->align() & ~alignmask::center);
-        }, {eventid::property_changed});
-        m_form->add_option(center);
-
         auto top = make_shared<CheckBox>("top");
-        if ((widget->align() & alignmask::top) == alignmask::top)
-            top->set_checked(true);
-        top->on_event([widget, top](Event&)
+        if (widget->align().is_set(AlignFlag::top))
+            top->checked(true);
+        top->on_checked_changed([widget, top]()
         {
             if (top->checked())
-                widget->set_align(widget->align() | alignmask::top);
+                widget->align(widget->align() | AlignFlag::top);
             else
-                widget->set_align(widget->align() & ~alignmask::top);
-        }, {eventid::property_changed});
+                widget->align().clear(AlignFlag::top);
+        });
         m_form->add_option(top);
 
         auto bottom = make_shared<CheckBox>("bottom");
-        if ((widget->align() & alignmask::bottom) == alignmask::bottom)
-            bottom->set_checked(true);
-        bottom->on_event([widget, bottom](Event&)
+        if (widget->align().is_set(AlignFlag::bottom))
+            bottom->checked(true);
+        bottom->on_checked_changed([widget, bottom]()
         {
             if (bottom->checked())
-                widget->set_align(widget->align() | alignmask::bottom);
+                widget->align(widget->align() | AlignFlag::bottom);
             else
-                widget->set_align(widget->align() & ~alignmask::bottom);
-        }, {eventid::property_changed});
+                widget->align().clear(AlignFlag::bottom);
+        });
         m_form->add_option(bottom);
 
         auto expand_horizontal = make_shared<CheckBox>("expand horizontal");
-        if ((widget->align() & alignmask::expand_horizontal) == alignmask::expand_horizontal)
-            expand_horizontal->set_checked(true);
-        expand_horizontal->on_event([widget, expand_horizontal](Event&)
+        if (widget->align().is_set(AlignFlag::expand_horizontal))
+            expand_horizontal->checked(true);
+        expand_horizontal->on_checked_changed([widget, expand_horizontal]()
         {
             if (expand_horizontal->checked())
-                widget->set_align(widget->align() | alignmask::expand_horizontal);
+                widget->align(widget->align() | AlignFlag::expand_horizontal);
             else
-                widget->set_align(widget->align() & ~alignmask::expand_horizontal);
-        }, {eventid::property_changed});
+                widget->align().clear(AlignFlag::expand_horizontal);
+        });
         m_form->add_option(expand_horizontal);
 
         auto expand_vertical = make_shared<CheckBox>("expand vertical");
-        if ((widget->align() & alignmask::expand_vertical) == alignmask::expand_vertical)
-            expand_vertical->set_checked(true);
-        expand_vertical->on_event([widget, expand_vertical](Event&)
+        if (widget->align().is_set(AlignFlag::expand_vertical))
+            expand_vertical->checked(true);
+        expand_vertical->on_checked_changed([widget, expand_vertical]()
         {
             if (expand_vertical->checked())
-                widget->set_align(widget->align() | alignmask::expand_vertical);
+                widget->align(widget->align() | AlignFlag::expand_vertical);
             else
-                widget->set_align(widget->align() & ~alignmask::expand_vertical);
-        }, {eventid::property_changed});
+                widget->align().clear(AlignFlag::expand_vertical);
+        });
         m_form->add_option(expand_vertical);
     }
 
@@ -492,50 +495,80 @@ public:
         if (widget->size().empty())
             widget->resize(Size(100, 100));
 
-        widget->on_event([this, widget](Event & event)
-        {
-            /// @todo drag is broken if you drag an item over one it is under
+        widget->walk([this](Widget* widget, int level){
+                widget->clear_handlers();
+                widget->on_event([this, widget](Event & event)
+                                 {
+                                     static Point start_point;
 
-            static Point m_start_point;
-            switch (event.id())
-            {
-            case eventid::raw_pointer_down:
-                if (event.pointer().btn == Pointer::button::left)
-                {
-                    show_properties(widget.get());
-                    m_selected = widget.get();
-                }
-                break;
-            case eventid::pointer_drag_start:
-                m_start_point = widget->box().point();
-                event.stop();
-                break;
-            case eventid::pointer_drag:
-            {
-                auto diff = event.pointer().drag_start - event.pointer().point;
-                widget->move(m_start_point - Point(diff.x(), diff.y()));
-                break;
-            }
-            case eventid::pointer_drag_stop:
-                widget->set_align(alignmask::none);
-                show_properties(widget.get());
-                m_selected = widget.get();
-                break;
-            default:
-                break;
-            }
-        });
+                                     /// @todo drag is broken if you drag an item over one it is under
+
+                                     switch (event.id())
+                                     {
+                                     case EventId::raw_pointer_down:
+                                         if (event.pointer().btn == Pointer::Button::left)
+                                         {
+                                             show_properties(widget);
+                                             m_selected = widget;
+                                         }
+                                         break;
+                                     case EventId::pointer_drag_start:
+                                         widget->align().clear();
+                                         start_point = widget->box().point();
+                                         event.stop();
+                                         break;
+                                     case EventId::pointer_drag:
+                                     {
+                                         auto diff = event.pointer().drag_start - event.pointer().point;
+                                         widget->move(start_point - Point(diff.x(), diff.y()));
+                                         break;
+                                     }
+                                     case EventId::pointer_drag_stop:
+                                         show_properties(widget);
+                                         m_selected = widget;
+                                         break;
+                                     default:
+                                         break;
+                                     }
+                                 });
+
+                return true;
+            });
 
         m_selected = widget.get();
-
         show_properties(widget.get());
+    }
+
+    void load(const std::string& file)
+    {
+        egt::experimental::UiLoader loader;
+        auto canvas = dynamic_pointer_cast<Window>(loader.load(file));
+
+        if (canvas)
+        {
+            m_canvas->remove_all();
+
+            while (canvas->count_children())
+            {
+                auto child = canvas->child_at(0);
+                child->detach();
+                add_widget(child, m_canvas->local_to_display(child->point()), m_canvas.get());
+            }
+
+            m_canvas->layout();
+        }
+        else
+        {
+            cerr << "no window loaded" << endl;
+        }
     }
 
 private:
 
-    shared_ptr<Frame> m_canvas;
+    shared_ptr<Window> m_canvas;
     shared_ptr<Form> m_form;
     shared_ptr<SelectableGrid> m_grid;
+    shared_ptr<BoxSizer> m_hsizer;
     Widget* m_selected{nullptr};
 };
 
@@ -546,6 +579,10 @@ int main(int argc, const char** argv)
     MainWindow win;
     win.show();
 
+    if (argc >= 2)
+        win.load(argv[1]);
+
+#if 0
     OstreamWidgetSerializer s(cout);
     win.walk(std::bind(&OstreamWidgetSerializer::add, std::ref(s),
                        std::placeholders::_1, std::placeholders::_2));
@@ -553,8 +590,9 @@ int main(int argc, const char** argv)
     XmlWidgetSerializer xml;
     win.walk(std::bind(&XmlWidgetSerializer::add, std::ref(xml),
                        std::placeholders::_1, std::placeholders::_2));
-    xml.write("tree.xml");
+    xml.write("ui.xml");
     xml.write(cout);
+#endif
 
     return app.run();
 }

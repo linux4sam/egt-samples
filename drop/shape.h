@@ -31,12 +31,12 @@ public:
 
     explicit RotateRectangleWidget(const egt::Color& fill)
     {
-        set_border(2);
-        set_theme(theme());
-        set_color(egt::Palette::ColorId::bg, fill);
+        border(2);
+        theme(theme());
+        color(egt::Palette::ColorId::bg, fill);
     }
 
-    void set_angle(double angle)
+    void angle(double angle)
     {
         if (egt::detail::change_if_diff<>(m_angle, angle))
             damage();
@@ -55,7 +55,7 @@ public:
         drawbox.move_to_center(center());
 
         theme().draw_box(painter,
-                         Theme::boxtype::fill | Theme::boxtype::solid,
+                         {Theme::BoxFlag::fill, Theme::BoxFlag::solid},
                          drawbox,
                          color(Palette::ColorId::border),
                          color(Palette::ColorId::bg),

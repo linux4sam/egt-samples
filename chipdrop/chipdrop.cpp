@@ -48,10 +48,10 @@ struct Box2DWindow : public TopWindow
         : TopWindow()
     {
         auto label = make_shared<Label>("EGT Chipmunk 2D Physics",
-                                        alignmask::center);
+                                        AlignFlag::center_horizontal | AlignFlag::center_vertical);
         auto font = label->font();
-        font.set_size(40);
-        label->set_font(font);
+        font.size(40);
+        label->font(font);
         add(egt::center(label));
 
         m_space = create_world(to_meter(size().width()), to_meter(size().height())) ;
@@ -63,7 +63,7 @@ struct Box2DWindow : public TopWindow
 
         switch (event.id())
         {
-        case eventid::pointer_hold:
+        case EventId::pointer_hold:
         {
             auto mouse = display_to_local(event.pointer().point);
             auto shape = make_shared<Shape>(m_space, mouse);
@@ -75,7 +75,7 @@ struct Box2DWindow : public TopWindow
             shape->toss();
             break;
         }
-        case eventid::pointer_click:
+        case EventId::pointer_click:
         {
             auto mouse = display_to_local(event.pointer().point);
             auto shape = make_shared<Shape>(m_space, mouse);
@@ -85,7 +85,7 @@ struct Box2DWindow : public TopWindow
             m_boxes.push_back(shape);
             break;
         }
-        case eventid::pointer_dblclick:
+        case EventId::pointer_dblclick:
             for (auto i = m_boxes.begin(); i != m_boxes.end(); ++i)
                 (*i)->detach();
             m_boxes.clear();
@@ -98,11 +98,8 @@ struct Box2DWindow : public TopWindow
 
     void update()
     {
-        detail::code_timer(false, "step: ", [&]()
-        {
-            cpFloat timeStep = 1.0 / 30.0;
-            cpSpaceStep(m_space, timeStep);
-        });
+        cpFloat timeStep = 1.0 / 30.0;
+        cpSpaceStep(m_space, timeStep);
 
         for (auto i = m_boxes.begin(); i != m_boxes.end();)
         {

@@ -26,9 +26,9 @@ class RotateImageWidget: public egt::Widget
 public:
 	explicit RotateImageWidget();
 
-	void set_angle(double angle);
-	void set_image(const egt::Image& image);
-	void set_drawBoundingBox(bool bDraw) { m_drawBox = bDraw; }
+	void angle(double angle);
+	void image(const egt::Image& image);
+	void drawBoundingBox(bool bDraw) { m_drawBox = bDraw; }
 	virtual void draw(egt::Painter& painter, const egt::Rect&) override;
 
 protected:

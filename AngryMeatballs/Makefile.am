@@ -15,5 +15,6 @@ AngryMeatballs_SOURCES = main.cpp \
 AngryMeatballs_CXXFLAGS = $(CUSTOM_CXXFLAGS) $(AM_CXXFLAGS)
 AngryMeatballs_LDADD = $(top_builddir)/external/libbox2d.la $(CUSTOM_LDADD)
 AngryMeatballsdir = $(prefix)/share/egt/samples/AngryMeatballs
-dist_AngryMeatballs_DATA = $(wildcard $(top_srcdir)/AngryMeatballs/*.png)
+dist_AngryMeatballs_DATA = $(wildcard $(top_srcdir)/AngryMeatballs/*.png) \
+	$(wildcard $(top_srcdir)/AngryMeatballs/AngryMeatballs.xml)
 AngryMeatballs_LDFLAGS = $(AM_LDFLAGS)

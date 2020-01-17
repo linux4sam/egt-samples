@@ -82,7 +82,7 @@ struct Box2DWindow : public Window
 {
     Box2DWindow()
     {
-        set_boxtype(Theme::boxtype::none);
+        boxtype().clear();
 
         auto cr = screen()->context().get();
 
