@@ -262,7 +262,7 @@ int main(int argc, const char** argv)
     label1.color(Palette::ColorId::bg, Palette::transparent);
     win.add(bottom(left(label1)));
 
-    experimental::CPUMonitorUsage tools;
+    egt::experimental::CPUMonitorUsage tools;
     PeriodicTimer cputimer(std::chrono::seconds(1));
     cputimer.on_timeout([&label1, &tools]()
     {
