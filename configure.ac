@@ -66,6 +66,5 @@ AC_CONFIG_FILES([Makefile
 		newsfeed/Makefile
 		layout/Makefile
 		brick/Makefile
-		mqtt/Makefile
 		AngryMeatballs/Makefile])
 AC_OUTPUT
