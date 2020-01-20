@@ -62,7 +62,6 @@ AC_CONFIG_FILES([Makefile
 		chipdrop/Makefile
 		gallery/Makefile
 		weather/Makefile
-		animations/Makefile
 		water/Makefile
 		newsfeed/Makefile
 		layout/Makefile
