@@ -24,13 +24,6 @@ using namespace std;
 
 using create_function = std::function<shared_ptr<Widget>()>;
 
-struct widget_types
-{
-    std::string name;
-    std::string icon;
-    create_function create;
-};
-
 template <class T>
 shared_ptr<Widget> create_widget()
 {
@@ -144,16 +137,23 @@ shared_ptr<Widget> create_widget<PieChart>()
 {
     auto instance = make_shared<PieChart>();
 
-    std::map<std::string, float> data;
-    data.insert(make_pair("truck", .25));
-    data.insert(make_pair("car", .55));
-    data.insert(make_pair("bike", .10));
-    data.insert(make_pair("motorcycle", .05));
-    data.insert(make_pair("plane", .05));
+    PieChart::DataArray data;
+    data.push_back(make_pair(.25, "truck"));
+    data.push_back(make_pair(.55, "car"));
+    data.push_back(make_pair(.10, "bike"));
+    data.push_back(make_pair(.05, "motorcycle"));
+    data.push_back(make_pair(.05, "plane"));
     instance->data(data);
 
     return static_pointer_cast<Widget>(instance);
 }
+
+struct widget_types
+{
+    std::string name;
+    std::string icon;
+    create_function create;
+};
 
 static vector<widget_types> widgets =
 {
