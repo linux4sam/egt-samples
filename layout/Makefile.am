@@ -11,7 +11,7 @@ bin_PROGRAMS = layout
 layout_SOURCES = layout.cpp
 layout_CXXFLAGS = $(CUSTOM_CXXFLAGS) $(AM_CXXFLAGS)
 layout_LDADD = $(CUSTOM_LDADD)
-layoutdir = $(prefix)/share/egt/samples/layout
+layoutdir = $(prefix)/share/egt/samples/layout/icons
 dist_layout_DATA = $(wildcard $(top_srcdir)/layout/icons/*.png)
 
 layout_LDFLAGS = $(AM_LDFLAGS)
