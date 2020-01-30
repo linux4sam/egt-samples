@@ -132,6 +132,7 @@ shared_ptr<Widget> create_widget<Slider>()
     return static_pointer_cast<Widget>(instance);
 }
 
+#ifdef EGT_HAS_CHART
 template <>
 shared_ptr<Widget> create_widget<PieChart>()
 {
@@ -147,6 +148,7 @@ shared_ptr<Widget> create_widget<PieChart>()
 
     return static_pointer_cast<Widget>(instance);
 }
+#endif
 
 struct widget_types
 {
@@ -181,8 +183,10 @@ static vector<widget_types> widgets =
     { "spinprogress", "icons/spinprogress.png", create_widget<SpinProgress>},
     { "levelmeter", "icons/levelmeter.png", create_widget<LevelMeter>},
     { "analogmeter", "icons/analogmeter.png", create_widget<AnalogMeter>},
+#ifdef EGT_HAS_CHART
     { "linechart", "icons/linechart.png", create_widget<LineChart>},
     { "piechart", "icons/piechart.png", create_widget<PieChart>},
+#endif
     { "radial", "icons/radial.png", create_widget<RadialType<int>>},
 };
 
@@ -268,13 +272,13 @@ public:
         for (auto& w : widgets)
         {
             auto btn = make_shared<ImageButton>(Image(w.icon));
-            btn->boxtype().clear();
+            btn->fill_flags().clear();
             m_grid->add(egt::center(btn));
         }
 
         m_canvas = make_shared<Window>();
         m_canvas->border(global_theme().default_border());
-        m_canvas->boxtype(Theme::BoxFlag::fill);
+        m_canvas->fill_flags(Theme::FillFlag::blend);
         m_canvas->align(AlignFlag::expand_horizontal | AlignFlag::expand_vertical);
         m_canvas->horizontal_ratio(80);
         m_canvas->show();
@@ -326,8 +330,10 @@ public:
 
         save->on_click([this](Event&){
                 XmlWidgetSerializer xml;
-                m_canvas->walk(std::bind(&XmlWidgetSerializer::add, std::ref(xml),
-                                         std::placeholders::_1, std::placeholders::_2));
+                m_canvas->walk([&xml](Widget* widget, int level){
+                        xml.add(widget, level);
+                        return true;
+                    });
                 xml.write("ui.xml");
                 xml.write(cout);
             });

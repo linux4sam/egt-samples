@@ -5,15 +5,21 @@
  */
 #include <chrono>
 #include <cmath>
+#include <egt/painter.h>
+#include <egt/ui>
 #include <iomanip>
 #include <iostream>
-#include <egt/ui>
-#include <egt/painter.h>
+#include <libintl.h>
 #include <sstream>
 #include <string>
 
 using namespace std;
 using namespace egt;
+
+/**
+ * This is a wrapper around gettext().
+ */
+#define _(String) gettext(String)
 
 class MainWindow;
 

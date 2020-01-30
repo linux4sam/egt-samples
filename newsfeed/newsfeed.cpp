@@ -18,9 +18,9 @@ using namespace egt;
 using namespace egt::experimental;
 using namespace egt::detail;
 
-using download_callback = std::function<void(const HttpClientRequest::buffer_type& data)>;
+using DownloadCallback = std::function<void(const std::vector<unsigned char>& data)>;
 
-static void download(const std::string& url, download_callback callback)
+static void download(const std::string& url, DownloadCallback callback)
 {
     cout << "request " << url << endl;
 
@@ -31,20 +31,27 @@ static void download(const std::string& url, download_callback callback)
         return;
     }
 
-    // TODO: memory leak
-    auto session = new HttpClientRequest(url);
-    session->start([filename, callback](const std::string & url, HttpClientRequest::buffer_type && html)
+    // TODO: memory leaks
+    auto session = new HttpClientRequest;
+    auto buffer = new std::vector<unsigned char>;
+    session->start_async(url,
+                   [filename, callback, buffer](const unsigned char* data, size_t len, bool done)
     {
+        if (data && len)
+            buffer->insert(buffer->end(), data, data + len);
 
-        if (!filename.empty())
+        if (done)
         {
-            std::ofstream out(filename, std::ofstream::binary |
-                              std::ofstream::trunc | std::ofstream::out);
-            out.write(html.data(), html.size());
-            out.close();
-        }
+            if (!filename.empty())
+            {
+                std::ofstream out(filename, std::ofstream::binary |
+                                  std::ofstream::trunc | std::ofstream::out);
+                out.write(reinterpret_cast<const char*>(buffer->data()), buffer->size());
+                out.close();
+            }
 
-        callback(html);
+            callback(*buffer);
+        }
     });
 }
 
@@ -71,7 +78,7 @@ public:
 
         if (!image.empty())
         {
-            download(image, [this, image](const HttpClientRequest::buffer_type & data)
+            download(image, [this, image](const std::vector<unsigned char>& data)
             {
                 // this is silly, we have the data passed as data but still load from file
 
@@ -186,12 +193,12 @@ int main(int argc, const char** argv)
 
     win.show();
 
-    download(url, [&list](const HttpClientRequest::buffer_type & data)
+    download(url, [&list](const std::vector<unsigned char>& data)
     {
         if (!data.empty())
         {
             std::ofstream out("dynfeed.xml");
-            out.write(data.data(), data.size());
+            out.write(reinterpret_cast<const char*>(data.data()), data.size());
             out.close();
             load("dynfeed.xml", list);
         }

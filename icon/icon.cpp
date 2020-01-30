@@ -65,7 +65,7 @@ int main(int argc, const char** argv)
     {
         std::string basename = file.substr(file.find_last_of("/\\") + 1);
         auto icon = make_shared<ImageButton>(Image(file), basename);
-        icon->boxtype().clear();
+        icon->fill_flags().clear();
         icon->color(Palette::ColorId::button_text, Palette::black);
         grid0.add(icon);
     }

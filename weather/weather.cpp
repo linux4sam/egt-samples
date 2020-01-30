@@ -19,9 +19,9 @@ using namespace egt;
 using namespace egt::experimental;
 using namespace egt::detail;
 
-using download_callback = std::function<void(const HttpClientRequest::buffer_type& data)>;
+using DownloadCallback = std::function<void(const std::vector<unsigned char>& data)>;
 
-static void download(const std::string& url, download_callback callback, bool allow_cached = true)
+static void download(const std::string& url, DownloadCallback callback, bool allow_cached = true)
 {
     cout << "request " << url << endl;
 
@@ -36,25 +36,33 @@ static void download(const std::string& url, download_callback callback, bool al
         }
     }
 
-    // TODO: memory leak
-    auto session = new HttpClientRequest(url);
-    session->start([filename, callback](const std::string & url, HttpClientRequest::buffer_type && html)
+    // TODO: memory leaks
+    auto session = new HttpClientRequest;
+    auto buffer = new std::vector<unsigned char>;
+    session->start_async(url,
+                         [filename, callback, buffer](const unsigned char* data, size_t len, bool done)
     {
-        if (!filename.empty())
-        {
-            std::ofstream out(filename, std::ofstream::binary |
-                              std::ofstream::trunc | std::ofstream::out);
-            out.write(html.data(), html.size());
-            out.close();
-        }
+        if (data && len)
+            buffer->insert(buffer->end(), data, data + len);
 
-        callback(html);
+        if (done)
+        {
+            if (!filename.empty())
+            {
+                std::ofstream out(filename, std::ofstream::binary |
+                                  std::ofstream::trunc | std::ofstream::out);
+                out.write(reinterpret_cast<const char*>(buffer->data()), buffer->size());
+                out.close();
+            }
+
+            callback(*buffer);
+        }
     });
 }
 
 static void download_image(StaticGrid* grid, const std::string& url)
 {
-    download(url, [grid, url](const HttpClientRequest::buffer_type & data)
+    download(url, [grid, url](const std::vector<unsigned char>& data)
     {
         // this is silly, we have the data passed as data but still load from file
         auto filename = detail::extract_filename(url);
@@ -65,7 +73,7 @@ static void download_image(StaticGrid* grid, const std::string& url)
             if (surface)
             {
                 auto image = make_shared<ImageLabel>(Image(surface));
-                image->boxtype().clear();
+                image->fill_flags().clear();
                 image->align(AlignFlag::expand_horizontal | AlignFlag::expand_vertical);
                 grid->add(image);
             }
@@ -141,7 +149,7 @@ int main(int argc, const char** argv)
     title->align(AlignFlag::center_horizontal | AlignFlag::center_vertical);
     grid.add(title);
 
-    download(url, [&grid](const HttpClientRequest::buffer_type & data)
+    download(url, [&grid](const std::vector<unsigned char>& data)
     {
         string icon;
         string description;
@@ -152,7 +160,9 @@ int main(int argc, const char** argv)
             Json::CharReaderBuilder b;
             unique_ptr<Json::CharReader> reader(b.newCharReader());
             Json::Value root;
-            if (reader->parse(data.data(), data.data() + data.size(), &root, nullptr))
+            if (reader->parse(reinterpret_cast<const char*>(data.data()),
+                              reinterpret_cast<const char*>(data.data()) + data.size(),
+                              &root, nullptr))
             {
                 Json::Value weather = root["weather"][0];
                 cout << "id: " << weather["id"].asString() << endl;

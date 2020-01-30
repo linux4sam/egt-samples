@@ -82,7 +82,7 @@ struct Box2DWindow : public Window
 {
     Box2DWindow()
     {
-        boxtype().clear();
+        fill_flags().clear();
 
         auto cr = screen()->context().get();
 

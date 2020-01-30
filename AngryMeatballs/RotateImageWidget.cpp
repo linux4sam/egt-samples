@@ -71,7 +71,7 @@ void RotateImageWidget::draw(Painter& painter, const Rect&)
 		drawbox.shrink_around_center(4);
 		//drawbox.move_to_center(center());
 
-		theme().draw_box(painter, Theme::BoxFlag::fill, drawbox,
+		theme().draw_box(painter, Theme::FillFlag::blend, drawbox,
                                  Color(128, 128, 128),
                                  Palette::transparent,
                                  theme().default_border());

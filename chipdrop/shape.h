@@ -56,7 +56,7 @@ public:
 	drawbox.move_to_center(center());
 
 	theme().draw_box(painter,
-			 {Theme::BoxFlag::fill, Theme::BoxFlag::solid},
+			 Theme::FillFlag::solid,
 			 drawbox,
 			 color(Palette::ColorId::border),
 			 color(Palette::ColorId::bg),
