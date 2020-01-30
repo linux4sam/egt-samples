@@ -47,11 +47,22 @@ if test "x${have_jsoncpp}" = xyes; then
 fi
 AM_CONDITIONAL([HAVE_JSONCPP], [test "x${have_jsoncpp}" = xyes])
 
+save_CXXFLAGS="${CXXFLAGS}"
+save_CPPFLAGS="${CPPFLAGS}"
+save_LDFLAGS="${LDFLAGS}"
+CXXFLAGS="${LIBEGT_CFLAGS} ${CXXFLAGS}"
+CPPFLAGS="${LIBEGT_CFLAGS} ${CPPFLAGS}"
+LDFLAGS="${LIBEGT_LIBS} ${LDFLAGS}"
+
 AC_CHECK_HEADERS([egt/network/http.h], have_egt_network_http_h=yes, have_egt_network_http_h=no)
 AM_CONDITIONAL([HAVE_EGT_NETWORK_HTTP_H], [test "x${have_egt_network_http_h}" = xyes])
 
 AC_CHECK_HEADERS([egt/video.h], have_egt_video_h=yes, have_egt_video_h=no)
 AM_CONDITIONAL([HAVE_EGT_VIDEO_H], [test "x${have_egt_video_h}" = xyes])
+
+CXXFLAGS="${save_CXXFLAGS}"
+CPPFLAGS="${save_CPPFLAGS}"
+LDFLAGS="${save_LDFLAGS}"
 
 AC_CONFIG_FILES([Makefile
 		external/Makefile
