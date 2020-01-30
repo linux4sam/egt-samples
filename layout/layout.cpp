@@ -412,6 +412,30 @@ public:
                            create_option<int>([widget](int v) { widget->vertical_ratio(v); },
                                               [widget]() { return widget->vertical_ratio(); }));
 
+        auto centerh = make_shared<CheckBox>("center horizontal");
+        if (widget->align().is_set(AlignFlag::center_horizontal))
+            centerh->checked(true);
+        centerh->on_checked_changed([widget, centerh]()
+        {
+            if (centerh->checked())
+                widget->align(widget->align() | AlignFlag::center_horizontal);
+            else
+                widget->align().clear(AlignFlag::center_horizontal);
+        });
+        m_form->add_option(centerh);
+
+        auto centerv = make_shared<CheckBox>("center vertical");
+        if (widget->align().is_set(AlignFlag::center_vertical))
+            centerv->checked(true);
+        centerv->on_checked_changed([widget, centerv]()
+        {
+            if (centerv->checked())
+                widget->align(widget->align() | AlignFlag::center_vertical);
+            else
+                widget->align().clear(AlignFlag::center_vertical);
+        });
+        m_form->add_option(centerv);
+
         auto left = make_shared<CheckBox>("left");
         if (widget->align().is_set(AlignFlag::left))
             left->checked(true);
