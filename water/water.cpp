@@ -21,7 +21,7 @@ class Bubble : public ImageLabel
 {
 public:
     Bubble(int xspeed, int yspeed, const Point& point) noexcept
-        : ImageLabel(Image("smallbubble.png"), "", Rect(point, Size())),
+        : ImageLabel(Image("file:smallbubble.png"), "", Rect(point, Size())),
           m_xspeed(xspeed),
           m_yspeed(yspeed)
     {
@@ -63,7 +63,7 @@ public:
         : TopWindow(Size()),
           e1(r())
     {
-        background(Image("water.png"));
+        background(Image("file:water.png"));
 
         m_label = make_shared<Label>("Objects: 0",
                                      Rect(Point(10, 10),
@@ -73,7 +73,7 @@ public:
         m_label->color(Palette::ColorId::bg, Palette::transparent);
         add(top(left(m_label)));
 
-        m_sprite = make_shared<Sprite>(Image("diver.png"), Size(390, 312), 16, Point(0, 0));
+        m_sprite = make_shared<Sprite>(Image("file:diver.png"), Size(390, 312), 16, Point(0, 0));
         m_sprite->flags().set(Widget::Flag::no_layout);
         add(m_sprite);
         m_sprite->show();
@@ -160,7 +160,7 @@ int main(int argc, const char** argv)
 
 #define SPRITE1
 #ifdef SPRITE1
-    Sprite sprite1(Image("fish.png"), Size(252, 209), 8, Point(0, 0));
+    Sprite sprite1(Image("file:fish.png"), Size(252, 209), 8, Point(0, 0));
     sprite1.flags().set(Widget::Flag::no_layout);
     win.add(sprite1);
     sprite1.show();
@@ -169,7 +169,7 @@ int main(int argc, const char** argv)
 
 #define SPRITE2
 #ifdef SPRITE2
-    Sprite sprite2(Image("fish2.png"), Size(100, 87), 6, Point(0, 0));
+    Sprite sprite2(Image("file:fish2.png"), Size(100, 87), 6, Point(0, 0));
     sprite2.flags().set(Widget::Flag::no_layout);
     win.add(sprite2);
     sprite2.show();

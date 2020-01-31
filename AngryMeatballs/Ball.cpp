@@ -13,9 +13,9 @@ using namespace egt;
 
 static vector<string> image_names =
 {
-	"ball1.png",
-	"ball2.png",
-	"ball3.png"
+	"file:ball1.png",
+	"file:ball2.png",
+	"file:ball3.png"
 };
 
 Ball::Ball(b2World& world, const Point& point) :

@@ -47,7 +47,7 @@ static unique_ptr<b2World> create_world(double width, double height)
 
 MainWindow::MainWindow()
 {
-	background(Image("background.png"));
+	background(Image("file:background.png"));
 
 	color(Palette::ColorId::bg, Palette::black);
 	auto label = make_shared<Label>("Box2D Physics", AlignFlag::center_horizontal | AlignFlag::center_vertical);

@@ -23,8 +23,6 @@ using namespace egt;
 
 class MainWindow;
 
-shared_ptr<MainWindow> win1;
-
 class MyButton : public ImageButton
 {
 public:
@@ -74,7 +72,7 @@ static void top_menu(Window& win)
 {
     auto box1 = std::make_shared<Box>(win, Rect(Size(800, 60)), Palette::black);
 
-    auto i1 = std::make_shared<HomeImage>(win, "home.png", 5, 5);
+    auto i1 = std::make_shared<HomeImage>(win, "file:images/home.png", 5, 5);
 
     auto l1 = std::make_shared<Label>(win, "", Rect(Point(320, 0), Size(100, 60)), AlignFlag::center_horizontal | AlignFlag::center_vertical);
     l1->color(Palette::ColorId::text, Palette::white);
@@ -111,7 +109,7 @@ static void top_menu(Window& win)
     l2->color(Palette::ColorId::bg, Palette::transparent);
     win.add(l2);
 
-    auto i2 = std::make_shared<ImageLabel>(Image("wifi.png"), "", Rect(Point(800 - 50, 10), Size()));
+    auto i2 = std::make_shared<ImageLabel>(Image("file:images/wifi.png"), "", Rect(Point(800 - 50, 10), Size()));
     win.add(i2);
 }
 
@@ -120,28 +118,27 @@ static void bottom_menu(Window& win)
     auto grid2 = std::make_shared<StaticGrid>(win, Rect(Point(0, 390), Size(800, 90)), std::make_tuple(5, 1), 4);
     grid2->color(Palette::ColorId::border, Palette::transparent);
 
-    auto bb1 = std::make_shared<MyButton>("audio_s.png", _("Audio"), 0, 0);
+    auto bb1 = std::make_shared<MyButton>("file:images/audio_s.png", _("Audio"), 0, 0);
     grid2->add(expand(bb1), 0, 0);
 
-    auto bb2 = std::make_shared<MyButton>("climate_s.png", _("Climate"), 0, 0);
+    auto bb2 = std::make_shared<MyButton>("file:images/climate_s.png", _("Climate"), 0, 0);
     grid2->add(expand(bb2), 1, 0);
 
-    auto bb3 = std::make_shared<MyButton>("navigation_s.png", _("Nav"), 0, 0);
+    auto bb3 = std::make_shared<MyButton>("file:images/navigation_s.png", _("Nav"), 0, 0);
     grid2->add(expand(bb3), 2, 0);
 
-    auto bb4 = std::make_shared<MyButton>("phone_s.png", _("Phone"), 0, 0);
+    auto bb4 = std::make_shared<MyButton>("file:images/phone_s.png", _("Phone"), 0, 0);
     grid2->add(expand(bb4), 3, 0);
 
-    auto bb5 = std::make_shared<MyButton>("apps_s.png", _("Apps"), 0, 0);
+    auto bb5 = std::make_shared<MyButton>("file:images/apps_s.png", _("Apps"), 0, 0);
     grid2->add(expand(bb5), 4, 0);
 }
 
 class MainWindow : public TopWindow
 {
 public:
-    explicit MainWindow(const Size& size)
-        : TopWindow(size),
-          grid(Rect(Point(0, 60), Size(800, 330)), std::make_tuple(4, 2), 10)
+    explicit MainWindow()
+        : grid(Rect(Point(0, 60), Size(800, 330)), std::make_tuple(4, 2), 10)
     {
         color(Palette::ColorId::bg, Palette::lightblue);
 
@@ -149,25 +146,25 @@ public:
 
         add(grid);
 
-        auto b1 = std::make_shared<MyButton>("sound.png", _("Sound"));
+        auto b1 = std::make_shared<MyButton>("file:images/sound.png", _("Sound"));
         grid.add(expand(b1));
 
-        auto b2 = std::make_shared<MyButton>("clock.png", _("Clock"));
+        auto b2 = std::make_shared<MyButton>("file:images/clock.png", _("Clock"));
         grid.add(expand(b2));
 
-        auto b3 = std::make_shared<MyButton>("bluetooth.png", _("Bluetooth"));
+        auto b3 = std::make_shared<MyButton>("file:images/bluetooth.png", _("Bluetooth"));
         grid.add(expand(b3));
 
-        auto b4 = std::make_shared<MyButton>("phone.png", _("Phone"));
+        auto b4 = std::make_shared<MyButton>("file:images/phone.png", _("Phone"));
         grid.add(expand(b4));
 
-        auto b5 = std::make_shared<MyButton>("apps.png", _("Mobile Apps"));
+        auto b5 = std::make_shared<MyButton>("file:images/apps.png", _("Mobile Apps"));
         grid.add(expand(b5));
 
-        auto b6 = std::make_shared<MyButton>("navigation.png", _("Navigation"));
+        auto b6 = std::make_shared<MyButton>("file:images/navigation.png", _("Navigation"));
         grid.add(expand(b6));
 
-        auto b7 = std::make_shared<MyButton>("general.png", _("General"));
+        auto b7 = std::make_shared<MyButton>("file:images/general.png", _("General"));
         grid.add(expand(b7));
 
         top_menu(*this);
@@ -181,9 +178,8 @@ int main(int argc, const char** argv)
 {
     Application app(argc, argv, "infotain");
 
-    win1 = make_shared<MainWindow>(Size(800, 480));
-
-    win1->show();
+    MainWindow win;
+    win.show();
 
     return app.run();
 }

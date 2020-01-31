@@ -127,7 +127,7 @@ int main(int argc, const char** argv)
     auto url = ss.str();
 
     TopWindow win;
-    auto i = Image("background.jpg");
+    auto i = Image("file:background.jpg");
     auto img = make_shared<ImageLabel>(i);
     img->align(AlignFlag::expand_horizontal | AlignFlag::expand_vertical);
     img->image_align(AlignFlag::expand_horizontal | AlignFlag::expand_vertical);

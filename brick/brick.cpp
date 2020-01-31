@@ -22,12 +22,12 @@ public:
                   std::make_tuple(width() / 100, ROWS), 5),
           m_grid2(Rect(Point(0, 50 + 80 + 30), Size(width(), 80)),
                   std::make_tuple(width() / 100, ROWS), 5),
-          m_ball(Image("small_ball.png")),
-          m_paddle(Image("paddle.png")),
+          m_ball(Image("file:small_ball.png")),
+          m_paddle(Image("file:paddle.png")),
           m_label("-", AlignFlag::left | AlignFlag::center_horizontal | AlignFlag::center_vertical),
           e1(random())
     {
-        background(Image("brick_background.png"));
+        background(Image("file:brick_background.png"));
 
         add(m_grid1);
         add(m_grid2);
@@ -39,7 +39,7 @@ public:
             for (int r = 0; r < ROWS; r++)
             {
                 ostringstream ss;
-                ss << "brick" << r << ".png";
+                ss << "file:brick" << r << ".png";
                 auto block = make_shared<ImageLabel>(Image(ss.str()));
                 m_blocks.push_back(block);
                 m_grid1.add(expand(block), c, r);
@@ -51,7 +51,7 @@ public:
             for (int r = 0; r < ROWS; r++)
             {
                 ostringstream ss;
-                ss << "brick" << r + 2 << ".png";
+                ss << "file:brick" << r + 2 << ".png";
                 auto block = make_shared<ImageLabel>(Image(ss.str()));
                 m_blocks.push_back(block);
                 m_grid2.add(expand(block), c, r);
