@@ -67,7 +67,6 @@ LDFLAGS="${save_LDFLAGS}"
 AC_CONFIG_FILES([Makefile
 		external/Makefile
 		icon/Makefile
-		infotain/Makefile
 		drop/Makefile
 		ragdoll/Makefile
 		chipdrop/Makefile

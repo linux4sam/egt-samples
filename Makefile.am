@@ -3,7 +3,6 @@ external \
 AngryMeatballs \
 brick \
 icon \
-infotain \
 drop \
 ragdoll \
 chipdrop \
