@@ -93,7 +93,7 @@ shared_ptr<Widget> create_widget<ListBox>()
 template <>
 shared_ptr<Widget> create_widget<ImageLabel>()
 {
-    auto instance = make_shared<ImageLabel>(Image("icons/image_default.png"));
+    auto instance = make_shared<ImageLabel>(Image("file:icons/image_default.png"));
     instance->image_align(AlignFlag::expand_horizontal | AlignFlag::expand_vertical);
     return static_pointer_cast<Widget>(instance);
 }
@@ -159,35 +159,35 @@ struct widget_types
 
 static vector<widget_types> widgets =
 {
-    { "frame", "icons/frame.png", create_widget<Frame> },
-    { "vsizer", "icons/vertical.png", create_widget<VerticalBoxSizer> },
-    { "hsizer", "icons/horizontal.png", create_widget<HorizontalBoxSizer> },
-    { "flexsizer", "icons/flex.png", create_widget<FlexBoxSizer> },
-    { "grid", "icons/grid.png", create_widget<StaticGrid>},
-    { "grid", "icons/selectgrid.png", create_widget<SelectableGrid>},
-    { "view", "icons/view.png", create_widget<ScrolledView>},
-    { "circle", "icons/circle.png", create_widget<CircleWidget>},
-    { "line", "icons/line.png", create_widget<LineWidget>},
-    { "square", "icons/square.png", create_widget<RectangleWidget>},
-    { "buttton", "icons/button.png", create_widget<Button> },
-    { "label", "icons/label.png", create_widget<Label> },
-    { "textbox", "icons/textbox.png", create_widget<TextBox>},
-    { "listbox", "icons/listbox.png", create_widget<ListBox>},
-    { "imagelabel", "icons/imagelabel.png", create_widget<ImageLabel>},
-    { "radiobox", "icons/radiobox.png", create_widget<RadioBox>},
-    { "combobox", "icons/combobox.png", create_widget<ComboBox>},
-    { "checkbox", "icons/checkbox.png", create_widget<CheckBox>},
-    { "togglebox", "icons/togglebox.png", create_widget<ToggleBox>},
-    { "slider", "icons/slider.png", create_widget<Slider>},
-    { "progressbar", "icons/progress.png", create_widget<ProgressBar>},
-    { "spinprogress", "icons/spinprogress.png", create_widget<SpinProgress>},
-    { "levelmeter", "icons/levelmeter.png", create_widget<LevelMeter>},
-    { "analogmeter", "icons/analogmeter.png", create_widget<AnalogMeter>},
+    { "frame", "file:icons/frame.png", create_widget<Frame> },
+    { "vsizer", "file:icons/vertical.png", create_widget<VerticalBoxSizer> },
+    { "hsizer", "file:icons/horizontal.png", create_widget<HorizontalBoxSizer> },
+    { "flexsizer", "file:icons/flex.png", create_widget<FlexBoxSizer> },
+    { "grid", "file:icons/grid.png", create_widget<StaticGrid>},
+    { "grid", "file:icons/selectgrid.png", create_widget<SelectableGrid>},
+    { "view", "file:icons/view.png", create_widget<ScrolledView>},
+    { "circle", "file:icons/circle.png", create_widget<CircleWidget>},
+    { "line", "file:icons/line.png", create_widget<LineWidget>},
+    { "square", "file:icons/square.png", create_widget<RectangleWidget>},
+    { "buttton", "file:icons/button.png", create_widget<Button> },
+    { "label", "file:icons/label.png", create_widget<Label> },
+    { "textbox", "file:icons/textbox.png", create_widget<TextBox>},
+    { "listbox", "file:icons/listbox.png", create_widget<ListBox>},
+    { "imagelabel", "file:icons/imagelabel.png", create_widget<ImageLabel>},
+    { "radiobox", "file:icons/radiobox.png", create_widget<RadioBox>},
+    { "combobox", "file:icons/combobox.png", create_widget<ComboBox>},
+    { "checkbox", "file:icons/checkbox.png", create_widget<CheckBox>},
+    { "togglebox", "file:icons/togglebox.png", create_widget<ToggleBox>},
+    { "slider", "file:icons/slider.png", create_widget<Slider>},
+    { "progressbar", "file:icons/progress.png", create_widget<ProgressBar>},
+    { "spinprogress", "file:icons/spinprogress.png", create_widget<SpinProgress>},
+    { "levelmeter", "file:icons/levelmeter.png", create_widget<LevelMeter>},
+    { "analogmeter", "file:icons/analogmeter.png", create_widget<AnalogMeter>},
 #ifdef EGT_HAS_CHART
-    { "linechart", "icons/linechart.png", create_widget<LineChart>},
-    { "piechart", "icons/piechart.png", create_widget<PieChart>},
+    { "linechart", "file:icons/linechart.png", create_widget<LineChart>},
+    { "piechart", "file:icons/piechart.png", create_widget<PieChart>},
 #endif
-    { "radial", "icons/radial.png", create_widget<RadialType<int>>},
+    { "radial", "file:icons/radial.png", create_widget<RadialType<int>>},
 };
 
 template<class T>
@@ -228,7 +228,7 @@ public:
         auto frame = make_shared<Frame>(Size(0, 60));
         vsizer->add(expand_horizontal(frame));
 
-        auto logo = make_shared<ImageLabel>(Image("@128px/egt_logo_black.png"));
+        auto logo = make_shared<ImageLabel>(Image("icon:egt_logo_black.png"));
         logo->margin(1);
         logo->align(AlignFlag::center_horizontal | AlignFlag::center_vertical);
         frame->add(logo);
