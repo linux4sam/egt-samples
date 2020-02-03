@@ -69,7 +69,7 @@ shared_ptr<Widget> create_widget<RadioBox>()
 template <>
 shared_ptr<Widget> create_widget<ComboBox>()
 {
-    ComboBox::item_array combo_items;
+    ComboBox::ItemArray combo_items;
     for (auto x = 0; x < 5; x++)
         combo_items.push_back("item " + std::to_string(x));
 
@@ -233,7 +233,7 @@ public:
         logo->align(AlignFlag::center_horizontal | AlignFlag::center_vertical);
         frame->add(logo);
 
-        ComboBox::item_array combo_items =
+        ComboBox::ItemArray combo_items =
         {
             "Default",
             "Midnight",
