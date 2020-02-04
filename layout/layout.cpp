@@ -15,6 +15,7 @@
 #include <egt/themes/sky.h>
 #include <egt/ui>
 #include <egt/uiloader.h>
+#include <iostream>
 #include <memory>
 
 using namespace egt;

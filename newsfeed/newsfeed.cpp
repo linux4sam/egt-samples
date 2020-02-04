@@ -8,6 +8,7 @@
 #include <egt/detail/string.h>
 #include <egt/network/http.h>
 #include <egt/ui>
+#include <iostream>
 #include <rapidxml.hpp>
 #include <rapidxml_utils.hpp>
 #include <sstream>
