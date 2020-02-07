@@ -139,7 +139,7 @@ shared_ptr<Widget> create_widget<PieChart>()
 {
     auto instance = make_shared<PieChart>();
 
-    PieChart::DataArray data;
+    PieChart::StringDataArray data;
     data.push_back(make_pair(.25, "truck"));
     data.push_back(make_pair(.55, "car"));
     data.push_back(make_pair(.10, "bike"));
@@ -188,7 +188,7 @@ static vector<widget_types> widgets =
     { "linechart", "file:icons/linechart.png", create_widget<LineChart>},
     { "piechart", "file:icons/piechart.png", create_widget<PieChart>},
 #endif
-    { "radial", "file:icons/radial.png", create_widget<RadialType<int>>},
+    { "radial", "file:icons/radial.png", create_widget<Radial>},
 };
 
 template<class T>
