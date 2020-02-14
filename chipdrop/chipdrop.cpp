@@ -124,7 +124,7 @@ protected:
     vector<shared_ptr<Shape>> m_boxes;
 };
 
-int main(int argc, const char** argv)
+int main(int argc, char** argv)
 {
     Application app(argc, argv, "drop");
 

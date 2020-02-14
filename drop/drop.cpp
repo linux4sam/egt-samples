@@ -22,7 +22,7 @@ using namespace std;
 static unique_ptr<b2World> create_world(double width, double height)
 {
     auto gravity = -9.81;
-    auto world = detail::make_unique<b2World>(b2Vec2(0, gravity));
+    auto world = std::make_unique<b2World>(b2Vec2(0, gravity));
 
     b2Vec2 vs[3];
     vs[0].Set(0, height) ;
@@ -139,7 +139,7 @@ protected:
     vector<shared_ptr<Shape>> m_boxes;
 };
 
-int main(int argc, const char** argv)
+int main(int argc, char** argv)
 {
     Application app(argc, argv, "drop");
 

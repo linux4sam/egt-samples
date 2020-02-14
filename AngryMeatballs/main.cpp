@@ -10,8 +10,8 @@
 
 using namespace egt;
 
-int main(int argc, const char **argv) {
-    Application app(argc, argv, "AngryMeatballs");
+int main(int argc, char **argv) {
+	Application app(argc, argv, "AngryMeatballs");
 
 	MainWindow win;
 	win.show();

@@ -15,7 +15,7 @@ using namespace std;
 static unique_ptr<b2World> create_world(double width, double height)
 {
 	auto gravity = -9.81;
-	auto world = detail::make_unique<b2World>(b2Vec2(0, gravity));
+	auto world = std::make_unique<b2World>(b2Vec2(0, gravity));
 
 	// create a 'box' to hold the objects
 	b2Vec2 vs[4];

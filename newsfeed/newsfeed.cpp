@@ -173,7 +173,7 @@ static int load(const string& file, T& list)
     return 0;
 }
 
-int main(int argc, const char** argv)
+int main(int argc, char** argv)
 {
     string url = "https://www.microchip.com/RSS/Recent-AppNotes.xml";
     if (argc >= 2)

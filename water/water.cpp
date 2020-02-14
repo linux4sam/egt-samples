@@ -150,7 +150,7 @@ public:
     std::uniform_int_distribution<int> size_dist{10, 100};
 };
 
-int main(int argc, const char** argv)
+int main(int argc, char** argv)
 {
     Application app(argc, argv, "water");
 

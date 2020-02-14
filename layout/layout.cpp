@@ -251,13 +251,13 @@ public:
             auto s = combo->item_at(combo->selected());
 
             if (s == "Default")
-                global_theme(detail::make_unique<Theme>());
+                global_theme(std::make_unique<Theme>());
             else if (s == "Midnight")
-                global_theme(detail::make_unique<MidnightTheme>());
+                global_theme(std::make_unique<MidnightTheme>());
             else if (s == "Sky")
-                global_theme(detail::make_unique<SkyTheme>());
+                global_theme(std::make_unique<SkyTheme>());
             else if (s == "Shamrock")
-                global_theme(detail::make_unique<ShamrockTheme>());
+                global_theme(std::make_unique<ShamrockTheme>());
 
             this->damage();
         });
@@ -603,7 +603,7 @@ private:
     Widget* m_selected{nullptr};
 };
 
-int main(int argc, const char** argv)
+int main(int argc, char** argv)
 {
     Application app(argc, argv, "layout");
 

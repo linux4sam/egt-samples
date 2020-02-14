@@ -15,7 +15,7 @@
 using namespace std;
 using namespace egt;
 
-int main(int argc, const char** argv)
+int main(int argc, char** argv)
 {
     std::string dir;
     if (argc >= 2)

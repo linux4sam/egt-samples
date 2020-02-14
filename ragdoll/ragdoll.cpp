@@ -160,7 +160,7 @@ struct Box2DWindow : public Window
     double xTranslation ;
 };
 
-int main(int argc, const char** argv)
+int main(int argc, char** argv)
 {
     Application app(argc, argv);
 
