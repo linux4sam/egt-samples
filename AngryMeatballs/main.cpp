@@ -12,6 +12,7 @@ using namespace egt;
 
 int main(int argc, char **argv) {
 	Application app(argc, argv, "AngryMeatballs");
+	egt::add_search_path(ASSETDIR);
 
 	MainWindow win;
 	win.show();

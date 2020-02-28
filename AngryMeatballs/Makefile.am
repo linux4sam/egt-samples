@@ -12,7 +12,8 @@ AngryMeatballs_SOURCES = main.cpp \
 	Ball.h Ball.cpp \
 	MainWindow.h MainWindow.cpp \
 	RotateImageWidget.h RotateImageWidget.cpp
-AngryMeatballs_CXXFLAGS = $(CUSTOM_CXXFLAGS) $(AM_CXXFLAGS)
+AngryMeatballs_CXXFLAGS = $(CUSTOM_CXXFLAGS) $(AM_CXXFLAGS) \
+	-DASSETDIR=\"$(datadir)/egt/samples/AngryMeatballs\"
 AngryMeatballs_LDADD = $(top_builddir)/external/libbox2d.la $(CUSTOM_LDADD)
 AngryMeatballsdir = $(prefix)/share/egt/samples/AngryMeatballs
 dist_AngryMeatballs_DATA = $(wildcard $(top_srcdir)/AngryMeatballs/*.png) \
