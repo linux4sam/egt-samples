@@ -20,6 +20,8 @@ samples are mostly considered unstable and are for informational purposes.
 
 ![EGT Box2D Sample](docs/screenshot0.png "EGT Box2D Sample")
 
+![EGT Gallery Sample](docs/screenshot3.png "EGT Gallery Sample")
+
 ![EGT Weather Sample](docs/screenshot1.png "EGT Weather Sample")
 
 ![EGT Sprite Sample](docs/screenshot2.png "EGT Sprite Sample")

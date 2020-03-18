@@ -18,8 +18,11 @@ using namespace egt;
 int main(int argc, char** argv)
 {
     Application app(argc, argv, "gallery");
+#ifdef EXAMPLEDATA
+    add_search_path(EXAMPLEDATA);
+#endif
 
-    std::vector<std::string> files = detail::glob(resolve_file_path("movies/") + "*trailer*.jpg");
+    std::vector<std::string> files = detail::glob(resolve_file_path("movies/") + "*trailer*.png");
 
     TopWindow win;
     win.name("win");
@@ -33,7 +36,7 @@ int main(int argc, char** argv)
     if (fullscale <= 0)
         fullscale = 1.0;
 
-    ImageLabel logo(Image("icon:microchip_logo_white.png;128"));
+    ImageLabel logo(Image("icon:egt_logo_white.png;128"));
     win.add(logo);
     logo.align(AlignFlag::left | AlignFlag::top);
     logo.margin(10);
@@ -60,7 +63,7 @@ int main(int argc, char** argv)
         l->on_click([&player, file, &animator, &videoshown](Event&)
         {
             cout << "playing " << file << ".avi" << endl;
-            player.media(file + ".avi");
+            player.media("file://" + file + ".avi");
             player.play();
             player.show();
             videoshown = true;
@@ -93,7 +96,7 @@ int main(int argc, char** argv)
         l->on_click([&player, file, &animator, &videoshown](Event&)
         {
             cout << "playing " << file << ".avi" << endl;
-            player.media(file + ".avi");
+            player.media("file://" + file + ".avi");
             player.play();
             player.show();
             videoshown = true;
