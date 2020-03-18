@@ -1,7 +1,7 @@
 # EGT Gallery Sample
 
-This is an sample that shows a navigatable list of video thumbnails that
-can be selected to play an associated video.
+This is a sample application that shows a navigable list of video thumbnails
+that can be selected to play an associated video.
 
 # Generating Content
 
@@ -16,7 +16,7 @@ containing *.jpg and *.mov files.  For example:
 PATH=~/egt/examples/video/data/:$PATH ./encode.sh
 ```
 
-This script expects the the current directory to have a list of associatd *.jpg
+This script expects the the current directory to have a list of associated *.jpg
 and *.mov files.
 
 For example:
