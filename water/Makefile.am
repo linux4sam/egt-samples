@@ -8,7 +8,8 @@ CUSTOM_LDADD = $(LIBEGT_LIBS)
 bin_PROGRAMS = water
 
 water_SOURCES = water.cpp
-water_CXXFLAGS = $(CUSTOM_CXXFLAGS) $(AM_CXXFLAGS)
+water_CXXFLAGS = $(CUSTOM_CXXFLAGS) $(AM_CXXFLAGS) \
+	-DEXAMPLEDATA=\"$(datadir)/egt/samples/water\"
 water_LDADD = $(CUSTOM_LDADD)
 waterdir = $(prefix)/share/egt/samples/water
 dist_water_DATA = $(wildcard $(top_srcdir)/water/*.png)

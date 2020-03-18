@@ -153,7 +153,9 @@ public:
 int main(int argc, char** argv)
 {
     Application app(argc, argv, "water");
-
+#ifdef EXAMPLEDATA
+    add_search_path(EXAMPLEDATA);
+#endif
     MainWindow win;
 
     vector<Sprite*> sprites;
