@@ -7,7 +7,6 @@
 #include "config.h"
 #endif
 
-#include <egt/detail/serialize.h>
 #include <egt/form.h>
 #include <egt/shapes.h>
 #include <egt/themes/midnight.h>

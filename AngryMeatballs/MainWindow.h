@@ -23,7 +23,7 @@ public:
 	void handle(egt::Event& event) override;
 	void update();
 
-	virtual ~MainWindow()
+	~MainWindow() override
 	{
 		// The balls are added as children, but to destruct a Ball,
 		// we need m_world around.  So, explicitly cleanup the balls
