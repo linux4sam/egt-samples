@@ -19,9 +19,9 @@ public:
 
     GameWindow()
         : m_grid1(Rect(Point(0, 50), Size(width(), 80)),
-                  std::make_tuple(width() / 100, ROWS), 5),
+                  StaticGrid::GridSize(width() / 100, ROWS), 5),
           m_grid2(Rect(Point(0, 50 + 80 + 30), Size(width(), 80)),
-                  std::make_tuple(width() / 100, ROWS), 5),
+                  StaticGrid::GridSize(width() / 100, ROWS), 5),
           m_ball(Image("file:small_ball.png")),
           m_paddle(Image("file:paddle.png")),
           m_label("-", AlignFlag::left | AlignFlag::center_horizontal | AlignFlag::center_vertical),

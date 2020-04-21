@@ -65,7 +65,7 @@ int main(int argc, char** argv)
     std::vector<std::string> files = detail::glob(dir + "/" + "*.png");
 
     StaticGrid grid0(Rect(0, 0, files.size() / 6 * 160, win.height()),
-                     std::make_tuple(files.size() / 6, 6));
+                     StaticGrid::GridSize(files.size() / 6, 6));
     view0.add(grid0);
 
     for (auto& file : files)

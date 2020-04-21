@@ -48,7 +48,7 @@ int main(int argc, char** argv)
     view0.name("view0");
     win.add(view0);
 
-    StaticGrid grid0(Rect(0, 0, files.size() * 150, grid_height), std::make_tuple(files.size(), 1));
+    StaticGrid grid0(Rect(0, 0, files.size() * 150, grid_height), StaticGrid::GridSize(files.size(), 1));
     grid0.name("grid0");
     view0.add(grid0);
 
@@ -84,7 +84,7 @@ int main(int argc, char** argv)
     view1.name("view1");
     win.add(view1);
 
-    StaticGrid grid1(Rect(0, 0, files.size() * 150, grid_height), std::make_tuple(files.size(), 1));
+    StaticGrid grid1(Rect(0, 0, files.size() * 150, grid_height), StaticGrid::GridSize(files.size(), 1));
     grid1.name("grid1");
     view1.add(grid1);
 

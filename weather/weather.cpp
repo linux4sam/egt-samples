@@ -133,7 +133,7 @@ int main(int argc, char** argv)
     img->image_align(AlignFlag::expand_horizontal | AlignFlag::expand_vertical);
     win.add(img);
 
-    StaticGrid grid(Rect(0, 0, 400, 250), std::make_tuple(1, 5), 10);
+    StaticGrid grid(Rect(0, 0, 400, 250), StaticGrid::GridSize(1, 5), 10);
     win.add(grid);
     grid.align(AlignFlag::center_horizontal | AlignFlag::center_vertical | AlignFlag::right);
 
