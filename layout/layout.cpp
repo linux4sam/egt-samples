@@ -330,10 +330,7 @@ public:
 
         save->on_click([this](Event&){
                 XmlWidgetSerializer xml;
-                m_canvas->walk([&xml](Widget* widget, int level){
-                        xml.add(widget, level);
-                        return true;
-                    });
+                xml.add(m_canvas.get());
                 xml.write("ui.xml");
                 xml.write(cout);
             });
@@ -613,13 +610,12 @@ int main(int argc, char** argv)
         win.load(argv[1]);
 
 #if 0
-    OstreamWidgetSerializer s(cout);
-    win.walk(std::bind(&OstreamWidgetSerializer::add, std::ref(s),
-                       std::placeholders::_1, std::placeholders::_2));
+    OstreamWidgetSerializer s;
+    s.add(&win);
+    s.write(cout);
 
     XmlWidgetSerializer xml;
-    win.walk(std::bind(&XmlWidgetSerializer::add, std::ref(xml),
-                       std::placeholders::_1, std::placeholders::_2));
+    xml.add(&win);
     xml.write("ui.xml");
     xml.write(cout);
 #endif
