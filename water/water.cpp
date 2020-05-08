@@ -74,7 +74,7 @@ public:
         add(top(left(m_label)));
 
         m_sprite = make_shared<Sprite>(Image("file:diver.png"), Size(390, 312), 16, Point(0, 0));
-        m_sprite->flags().set(Widget::Flag::no_layout);
+        m_sprite->no_layout(true);
         add(m_sprite);
         m_sprite->show();
     }
@@ -163,7 +163,7 @@ int main(int argc, char** argv)
 #define SPRITE1
 #ifdef SPRITE1
     Sprite sprite1(Image("file:fish.png"), Size(252, 209), 8, Point(0, 0));
-    sprite1.flags().set(Widget::Flag::no_layout);
+    sprite1.no_layout(true);
     win.add(sprite1);
     sprite1.show();
     sprites.push_back(&sprite1);
@@ -172,7 +172,7 @@ int main(int argc, char** argv)
 #define SPRITE2
 #ifdef SPRITE2
     Sprite sprite2(Image("file:fish2.png"), Size(100, 87), 6, Point(0, 0));
-    sprite2.flags().set(Widget::Flag::no_layout);
+    sprite2.no_layout(true);
     win.add(sprite2);
     sprite2.show();
     sprites.push_back(&sprite2);

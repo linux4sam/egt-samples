@@ -60,7 +60,7 @@ public:
 
         add(m_paddle);
 
-        m_ball.flags().set(Widget::Flag::no_autoresize);
+        m_ball.autoresize(false);
         m_ball.resize(Size(Ratio<int>(width(), 5), Ratio<int>(width(), 5)));
         m_ball.image_align(AlignFlag::expand_horizontal | AlignFlag::expand_vertical);
         add(m_ball);

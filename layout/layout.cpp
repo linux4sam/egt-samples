@@ -350,7 +350,7 @@ public:
                 if (m_canvas->box().intersect(pos))
                 {
                     auto parent = static_cast<Frame*>(m_canvas->hit_test(event.pointer().point));
-                    if (parent && !parent->flags().is_set(Widget::Flag::frame))
+                    if (parent && !parent->frame())
                         parent = nullptr;
                     auto p = m_grid->selected();
                     auto index = p.x() + 3 * p.y();

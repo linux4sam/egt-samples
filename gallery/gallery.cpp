@@ -59,7 +59,7 @@ int main(int argc, char** argv)
     {
         auto l = make_shared<ImageButton>(Image("file:" + file));
         l->fill_flags().clear();
-        l->flags().clear(Widget::Flag::grab_mouse);
+        l->grab_mouse(false);
         l->on_click([&player, file, &animator, &videoshown](Event&)
         {
             cout << "playing " << file << ".avi" << endl;
@@ -92,7 +92,7 @@ int main(int argc, char** argv)
     {
         auto l = make_shared<ImageButton>(Image("file:" + file));
         l->fill_flags().clear();
-        l->flags().clear(Widget::Flag::grab_mouse);
+        l->grab_mouse(false);
         l->on_click([&player, file, &animator, &videoshown](Event&)
         {
             cout << "playing " << file << ".avi" << endl;
