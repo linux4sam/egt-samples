@@ -71,7 +71,7 @@ shared_ptr<Widget> create_widget<ComboBox>()
 {
     ComboBox::ItemArray combo_items;
     for (auto x = 0; x < 5; x++)
-        combo_items.push_back("item " + std::to_string(x));
+        combo_items.push_back(make_shared<StringItem>("item " + std::to_string(x)));
 
     auto instance = make_shared<ComboBox>(combo_items);
     return static_pointer_cast<Widget>(instance);
@@ -235,10 +235,10 @@ public:
 
         ComboBox::ItemArray combo_items =
         {
-            "Default",
-            "Midnight",
-            "Sky",
-            "Shamrock"
+            make_shared<StringItem>("Default"),
+            make_shared<StringItem>("Midnight"),
+            make_shared<StringItem>("Sky"),
+            make_shared<StringItem>("Shamrock")
         };
         auto combo = make_shared<ComboBox>(combo_items);
         combo->align(AlignFlag::center_vertical | AlignFlag::right);
@@ -249,13 +249,13 @@ public:
         {
             auto s = combo->item_at(combo->selected());
 
-            if (s == "Default")
+            if (s->text() == "Default")
                 global_theme(std::make_unique<Theme>());
-            else if (s == "Midnight")
+            else if (s->text() == "Midnight")
                 global_theme(std::make_unique<MidnightTheme>());
-            else if (s == "Sky")
+            else if (s->text() == "Sky")
                 global_theme(std::make_unique<SkyTheme>());
-            else if (s == "Shamrock")
+            else if (s->text() == "Shamrock")
                 global_theme(std::make_unique<ShamrockTheme>());
 
             this->damage();
