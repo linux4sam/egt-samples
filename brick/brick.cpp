@@ -19,9 +19,9 @@ public:
 
     GameWindow()
         : m_grid1(Rect(Point(0, 50), Size(width(), 80)),
-                  StaticGrid::GridSize(width() / 100, ROWS), 5),
+                  StaticGrid::GridSize(width() / 100, ROWS)),
           m_grid2(Rect(Point(0, 50 + 80 + 30), Size(width(), 80)),
-                  StaticGrid::GridSize(width() / 100, ROWS), 5),
+                  StaticGrid::GridSize(width() / 100, ROWS)),
           m_ball(Image("file:small_ball.png")),
           m_paddle(Image("file:paddle.png")),
           m_label("-", AlignFlag::left | AlignFlag::center_horizontal | AlignFlag::center_vertical),
@@ -31,7 +31,13 @@ public:
 
         add(m_grid1);
         add(m_grid2);
+        m_grid1.margin(5);
+        m_grid1.horizontal_space(5);
+        m_grid1.vertical_space(5);
         m_grid1.color(Palette::ColorId::border, Palette::transparent);
+        m_grid2.margin(5);
+        m_grid2.horizontal_space(5);
+        m_grid2.vertical_space(5);
         m_grid2.color(Palette::ColorId::border, Palette::transparent);
 
         for (int c = 0; c < width() / 100; c++)

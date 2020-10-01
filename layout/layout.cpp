@@ -109,18 +109,22 @@ shared_ptr<Widget> create_widget<ScrolledView>()
 template <>
 shared_ptr<Widget> create_widget<StaticGrid>()
 {
-    auto instance = make_shared<StaticGrid>(StaticGrid::GridSize(2, 2), 1);
+    auto instance = make_shared<StaticGrid>(StaticGrid::GridSize(2, 2));
     instance->resize(Size(200, 200));
     instance->border(instance->theme().default_border());
+    instance->horizontal_space(1);
+    instance->vertical_space(1);
     return static_pointer_cast<Widget>(instance);
 }
 
 template <>
 shared_ptr<Widget> create_widget<SelectableGrid>()
 {
-    auto instance = make_shared<SelectableGrid>(SelectableGrid::GridSize(2, 2), 1);
+    auto instance = make_shared<SelectableGrid>(SelectableGrid::GridSize(2, 2));
     instance->resize(Size(200, 200));
     instance->border(instance->theme().default_border());
+    instance->horizontal_space(1);
+    instance->vertical_space(1);
     return static_pointer_cast<Widget>(instance);
 }
 
@@ -264,7 +268,10 @@ public:
         m_hsizer = make_shared<BoxSizer>(Orientation::horizontal);
         vsizer->add(expand(m_hsizer));
 
-        m_grid = make_shared<SelectableGrid>(SelectableGrid::GridSize(3, 10), 5);
+        m_grid = make_shared<SelectableGrid>(SelectableGrid::GridSize(3, 10));
+        m_grid->margin(5);
+        m_grid->horizontal_space(5);
+        m_grid->vertical_space(5);
         m_grid->horizontal_ratio(15);
         m_grid->resize(Size(200, 0));
         m_hsizer->add(expand_vertical(m_grid));
