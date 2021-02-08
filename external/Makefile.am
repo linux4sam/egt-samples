@@ -107,7 +107,11 @@ libchipmunk2d_la_CFLAGS = \
 	-I$(top_srcdir)/external/Chipmunk2D/include \
 	$(AM_CFLAGS)
 
-#-DCP_USE_DOUBLES=0
+if CPU_ARM
+libchipmunk2d_la_CFLAGS += \
+ -DCP_USE_DOUBLES=0
+endif
+
 #-DCP_USE_CGTYPES=0
 #-mfloat-abi=hard
 #-mcpu=cortex-a5

@@ -23,6 +23,18 @@ AC_CHECK_HEADER_STDBOOL
 AC_C_INLINE
 AC_TYPE_UINT32_T
 
+AC_MSG_CHECKING([for native ARM])
+case "$host" in
+  arm*)
+      egt_cpu_arm=yes
+      ;;
+  *)
+      egt_cpu_arm=no
+      ;;
+esac
+AC_MSG_RESULT([$egt_cpu_arm])
+AM_CONDITIONAL(CPU_ARM, test "$egt_cpu_arm" = "yes")
+
 AX_PTHREAD([LIBS="$PTHREAD_LIBS $LIBS"
             CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
             CXXFLAGS="$CXXFLAGS $PTHREAD_CFLAGS"],
