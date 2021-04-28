@@ -2,7 +2,3 @@
 	path = external/Box2D
 	url = https://github.com/erincatto/Box2D.git
 	ignore = untracked
-[submodule "external/Chipmunk2D"]
-	path = external/Chipmunk2D
-	url = https://github.com/slembcke/Chipmunk2D.git
-	ignore = untracked

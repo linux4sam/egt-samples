@@ -80,7 +80,6 @@ AC_CONFIG_FILES([Makefile
 		icon/Makefile
 		drop/Makefile
 		ragdoll/Makefile
-		chipdrop/Makefile
 		gallery/Makefile
 		weather/Makefile
 		water/Makefile

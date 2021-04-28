@@ -5,7 +5,6 @@ brick \
 icon \
 drop \
 ragdoll \
-chipdrop \
 water \
 layout
 

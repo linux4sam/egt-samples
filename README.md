@@ -7,7 +7,6 @@ Sample applications using and demonstrating the
 samples are mostly considered unstable and are for informational purposes.
 
 - animations - simple animations
-- chipdrop - interactive Chipmunk2D itegration example
 - drop - interactive Box2D integration example
 - gallery - navigate a gallery of images
 - icon - navigate EGT icons
