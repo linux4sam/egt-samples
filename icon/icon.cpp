@@ -46,7 +46,7 @@ int main(int argc, char** argv)
     win.add(view0);
 
     PropertyAnimator swipe(0, 0, std::chrono::milliseconds(1000), easing_quintic_easein);
-    swipe.on_change(std::bind(&ScrolledView::hoffset, std::ref(view0), std::placeholders::_1));
+    swipe.on_change(std::bind(static_cast<void (ScrolledView::*)(int offset)>(&ScrolledView::hoffset), std::ref(view0), std::placeholders::_1));
 
     right.on_event([&](Event&)
     {
