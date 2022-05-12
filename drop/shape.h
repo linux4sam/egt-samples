@@ -32,7 +32,6 @@ public:
     explicit RotateRectangleWidget(const egt::Color& fill)
     {
         border(2);
-        theme(theme());
         color(egt::Palette::ColorId::bg, fill);
     }
 

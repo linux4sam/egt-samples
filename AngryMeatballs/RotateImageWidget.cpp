@@ -16,7 +16,6 @@ using namespace std;
 RotateImageWidget::RotateImageWidget() :
 	m_shapeSize(0, 0), m_drawBox(false)
 {
-	theme(theme());
 }
 
 void RotateImageWidget::image(const Image& image)
