@@ -143,11 +143,11 @@ shared_ptr<Widget> create_widget<PieChart>()
     auto instance = make_shared<PieChart>();
 
     egt::ChartItemArray data;
-    data.add(.25, "truck");
-    data.add(.55, "car");
-    data.add(.10, "bike");
-    data.add(.5, "motorcycle");
-    data.add(.5, "plane");
+    data.add(25, "truck");
+    data.add(55, "car");
+    data.add(10, "bike");
+    data.add(5, "motorcycle");
+    data.add(5, "plane");
     instance->data(data);
 
     return static_pointer_cast<Widget>(instance);
