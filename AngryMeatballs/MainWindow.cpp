@@ -55,7 +55,7 @@ MainWindow::MainWindow()
 	label->color(Palette::ColorId::text, Palette::black);
         label->color(Palette::ColorId::bg, Palette::transparent);
 	add(label);
-	egt::align(label, egt::AlignFlag::top | egt::AlignFlag::center_horizontal | AlignFlag::center_vertical);
+	egt::align(label, egt::AlignFlag::top | egt::AlignFlag::center_horizontal);
 
 	m_world = create_world(to_meter(size().width()), to_meter(size().height() - 55));
 
