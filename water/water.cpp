@@ -68,7 +68,7 @@ public:
         m_label = make_shared<Label>("Objects: 0",
                                      Rect(Point(10, 10),
                                           Size(150, 40)),
-                                     AlignFlag::left | AlignFlag::center_horizontal | AlignFlag::center_vertical);
+                                     AlignFlag::left | AlignFlag::center_vertical);
         m_label->color(Palette::ColorId::text, Palette::white);
         m_label->color(Palette::ColorId::bg, Palette::transparent);
         add(top(left(m_label)));
