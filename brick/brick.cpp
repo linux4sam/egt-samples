@@ -24,7 +24,7 @@ public:
                   StaticGrid::GridSize(width() / 100, ROWS)),
           m_ball(Image("file:small_ball.png")),
           m_paddle(Image("file:paddle.png")),
-          m_label("-", AlignFlag::left | AlignFlag::center_horizontal | AlignFlag::center_vertical),
+          m_label("-", AlignFlag::left | AlignFlag::center_vertical),
           e1(random())
     {
         background(Image("file:brick_background.png"));
