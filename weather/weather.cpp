@@ -135,7 +135,7 @@ int main(int argc, char** argv)
 
     StaticGrid grid(Rect(0, 0, 400, 250), StaticGrid::GridSize(1, 5));
     win.add(grid);
-    grid.align(AlignFlag::center_horizontal | AlignFlag::center_vertical | AlignFlag::right);
+    grid.align(AlignFlag::center_vertical | AlignFlag::right);
     grid.margin(10);
     grid.horizontal_space(10);
     grid.vertical_space(10);
