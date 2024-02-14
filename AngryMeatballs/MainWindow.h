@@ -34,9 +34,20 @@ public:
 		m_objects.clear();
 	}
 
+	b2World& world()
+	{
+		return *m_world;
+	}
+
+	egt::Point world2egt(const b2Vec2& position) const;
+	b2Vec2 egt2world(const egt::Point& point) const;
+
 protected:
+	egt::Point ground() const;
+
 	std::unique_ptr<b2World> m_world;
 	std::vector<std::shared_ptr<Ball>> m_objects;
+	double m_ground_ratio{1};
 
 };
 

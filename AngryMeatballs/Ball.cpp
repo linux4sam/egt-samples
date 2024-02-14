@@ -6,6 +6,7 @@
  */
 
 #include <Ball.h>
+#include <MainWindow.h>
 #include <random>
 
 using namespace std;
@@ -18,9 +19,10 @@ static vector<string> image_names =
 	"file:ball3.png"
 };
 
-Ball::Ball(b2World& world, const Point& point) :
+Ball::Ball(MainWindow& window, const Point& point) :
 	RotateImageWidget(),
-	m_world(world),
+	m_world(window.world()),
+	m_window(window),
 	m_createTime(std::chrono::steady_clock::now()),
 	m_alive(true)
 {
@@ -37,10 +39,9 @@ Ball::Ball(b2World& world, const Point& point) :
 	move_to_center(point);
 
 	auto radius = m_shapeSize.width() / 2;
-	auto x = to_meter(point.x());
-	auto y = to_meter(480 - 55) - to_meter(point.y());
+	auto position = m_window.egt2world(point);
 
-	m_body = createElement(to_meter(radius), b2Vec2(x, y));
+	m_body = createElement(to_meter(radius), position);
 }
 
 Ball::~Ball()
@@ -53,9 +54,7 @@ void Ball::update()
 	b2Vec2 position = m_body->GetPosition();
 	float32 angle = m_body->GetAngle();
 
-	double x = from_meter(position(0));
-	double y = from_meter(position(1));
-	Point p(x, 480 - 55 - y);
+	Point p = m_window.world2egt(position);
 
 	move_to_center(p);
 	this->angle(-angle);

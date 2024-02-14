@@ -48,6 +48,7 @@ static unique_ptr<b2World> create_world(double width, double height)
 MainWindow::MainWindow()
 {
 	background(Image("file:background.png"));
+	m_ground_ratio = (480. - 55.) / 480.;
 
 	color(Palette::ColorId::bg, Palette::black);
 	auto label = make_shared<Label>("Box2D Physics", AlignFlag::center_horizontal | AlignFlag::center_vertical);
@@ -57,7 +58,7 @@ MainWindow::MainWindow()
 	add(label);
 	egt::align(label, egt::AlignFlag::top | egt::AlignFlag::center_horizontal);
 
-	m_world = create_world(to_meter(size().width()), to_meter(size().height() - 55));
+	m_world = create_world(to_meter(size().width()), to_meter(m_ground_ratio * size().height()));
 
 	cout << "MainWindow size " << size() << endl;
 }
@@ -72,7 +73,7 @@ void MainWindow::handle(Event& event)
 		case EventId::pointer_hold:
 		{
 			auto mouse = display_to_local(event.pointer().point);
-			auto shape = make_shared<Ball>(*m_world, mouse);
+			auto shape = make_shared<Ball>(*this, mouse);
 
 			cout << "Created" << shape->box() << endl;
 			add(shape);
@@ -84,7 +85,7 @@ void MainWindow::handle(Event& event)
 		case EventId::pointer_click:
 		{
 			auto mouse = display_to_local(event.pointer().point);
-			auto shape = make_shared<Ball>(*m_world, mouse);
+			auto shape = make_shared<Ball>(*this, mouse);
 
 			cout << "Created" << shape->box() << endl;
 			add(shape);
@@ -124,4 +125,21 @@ void MainWindow::update()
 			++i;
 		}
 	}
+}
+
+egt::Point MainWindow::ground() const
+{
+	return egt::Point(0, m_ground_ratio * height());
+}
+
+egt::Point MainWindow::world2egt(const b2Vec2& position) const
+{
+	auto p = egt::Point(from_meter(position.x), from_meter(-position.y));
+	return p + ground();
+}
+
+b2Vec2 MainWindow::egt2world(const egt::Point& point) const
+{
+	auto p = point - ground();
+	return b2Vec2(to_meter(p.x()), to_meter(-p.y()));
 }

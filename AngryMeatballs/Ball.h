@@ -13,10 +13,12 @@
 #include <chrono>
 #include <egt/ui>
 
+class MainWindow;
+
 class Ball: public RotateImageWidget
 {
 public:
-	Ball(b2World& world, const egt::Point& point);
+	Ball(MainWindow& window, const egt::Point& point);
 
 	std::unique_ptr<Widget> clone()
 	{
@@ -40,6 +42,7 @@ public:
 
 protected:
 	b2World& m_world;
+	MainWindow& m_window;
 	b2Body* createElement(const float radius, const b2Vec2& position);
 
 private:
