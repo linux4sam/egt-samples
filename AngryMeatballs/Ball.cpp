@@ -7,7 +7,7 @@
 
 #include <Ball.h>
 #include <MainWindow.h>
-#include <random>
+#include <cstdlib>
 
 using namespace std;
 using namespace egt;
@@ -26,11 +26,7 @@ Ball::Ball(MainWindow& window, const Point& point) :
 	m_createTime(std::chrono::steady_clock::now()),
 	m_alive(true)
 {
-	std::random_device r;
-	std::default_random_engine e1(r());
-	std::uniform_int_distribution<int> uniform_dist(0, image_names.size() - 1);
-
-	int ball_size = uniform_dist(e1);
+	int ball_size = std::rand() % image_names.size();
 	auto image = Image(image_names[ball_size].c_str());
 
 	this->image(image);
