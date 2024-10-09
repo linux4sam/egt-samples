@@ -36,7 +36,7 @@ int main(int argc, char** argv)
     if (fullscale <= 0)
         fullscale = 1.0;
 
-    ImageLabel logo(Image("icon:egt_logo_white.png;128"));
+    ImageLabel logo(Image("icon:mgs_logo_white.png;128"));
     win.add(logo);
     logo.align(AlignFlag::left | AlignFlag::top);
     logo.margin(10);
