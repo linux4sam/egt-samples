@@ -7,7 +7,6 @@
 #define SHAPE_H
 
 #include <Box2D/Box2D.h>
-#include <cairo.h>
 #include <egt/ui>
 #include <iostream>
 #include <map>
@@ -45,10 +44,9 @@ public:
     {
         using namespace egt;
 
-        auto cr = painter.context().get();
-        cairo_translate(cr, center().x(), center().y());
-        cairo_rotate(cr, m_angle);
-        cairo_translate(cr, -center().x(), -center().y());
+        painter.translate(center());
+        painter.rotate(m_angle);
+        painter.translate(-center());
 
         Rect drawbox(Point(), m_shapesize);
         drawbox.move_to_center(center());

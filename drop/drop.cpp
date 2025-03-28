@@ -5,7 +5,6 @@
  */
 #include "shape.h"
 #include <Box2D/Box2D.h>
-#include <cairo.h>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
