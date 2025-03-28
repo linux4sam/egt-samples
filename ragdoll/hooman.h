@@ -2,7 +2,7 @@
 #define HOOMAN_H
 
 #include <Box2D/Box2D.h>
-#include <cairo.h>
+#include <egt/ui>
 
 // inspired by https://github.com/trbljump/CairOLed
 
@@ -44,7 +44,7 @@ public:
         return pos(0)/i;
     }
 
-    void render_to_cairo(cairo_t* cr, bool blackout = false);
+    void render(egt::Painter& painter, bool blackout = false);
 
     protected:
     b2World& world;

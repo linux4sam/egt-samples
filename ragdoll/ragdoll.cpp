@@ -5,8 +5,8 @@
  */
 #include "hooman.h"
 #include <Box2D/Box2D.h>
-#include <cairo.h>
 #include <egt/ui>
+#include <algorithm>
 #include <iostream>
 #include <map>
 #include <math.h>
@@ -47,62 +47,21 @@ static b2World* createWorld(double width, double height)
     return myWorld ;
 }
 
-static cairo_t* createCairo(cairo_t* cr, double width, double height)
-{
-    double x1, x2, y1, y2 ;
-    cairo_matrix_t matrix ;
-    double scale, xs, ys ;
-    double ox, oy ;
-
-    cairo_clip_extents(cr, &x1, &y1, &x2, &y2) ;
-
-    xs = (x2 - y1) / width ;
-    ys = (y2 - y1) / height ;
-
-    scale = xs > ys ? ys : xs ;
-    ox = (((x2 - x1) / scale) - width) / 2 ;
-    oy = (((y2 - y1) / scale) - height) / 2 ;
-
-    cairo_matrix_init_scale(&matrix, scale, scale) ;
-    cairo_matrix_translate(&matrix, ox, oy) ;
-    cairo_set_matrix(cr, &matrix) ;
-
-    cairo_set_line_width(cr, 1.0 / scale) ;
-
-    cairo_select_font_face(cr, "Lato",
-                           CAIRO_FONT_SLANT_NORMAL,
-                           CAIRO_FONT_WEIGHT_BOLD);
-
-    cairo_set_font_size(cr, 0.65);
-
-    return cr ;
-}
-
 struct Box2DWindow : public Window
 {
     Box2DWindow()
     {
         fill_flags().clear();
 
-        auto cr = screen()->context().get();
+        double height = 2.5 ;
+        double width = 1.5 * height ;
 
-        height = 2.5 ;
-        width = 1.5 * height ;
-        xTranslation = 0 ;
-
-        createCairo(cr, width, height) ;
+        setupEGT(width, height) ;
         world = createWorld(width, height) ;
-
-        cairo_matrix_init_scale(&matrix, 1, -1) ;
-        cairo_matrix_translate(&matrix, 0, -height) ;
-
-        cairo_transform(cr, &matrix) ;
     }
 
     virtual void draw(Painter& painter, const Rect&)
     {
-        auto  cr = painter.context().get();
-
         while (hoomans.size() < 1)
         {
             hoomans.push_back(new Hooman(*world)) ;
@@ -112,7 +71,7 @@ struct Box2DWindow : public Window
              i != hoomans.end() ;
              ++i)
         {
-            (*i)->render_to_cairo(cr, true) ;
+            (*i)->render(painter, true) ;
         }
 
         world->Step((1.0 / 25), 8, 8) ;
@@ -122,7 +81,7 @@ struct Box2DWindow : public Window
         {
             if ((*i)->isAlive())
             {
-                (*i)->render_to_cairo(cr) ;
+                (*i)->render(painter) ;
 
                 if (drand48() < 0.1)
                 {
@@ -153,11 +112,33 @@ struct Box2DWindow : public Window
         delete world ;
     }
 
+    void setupEGT(float width, float height)
+    {
+        auto& painter = screen()->painter();
+
+        auto w = static_cast<float>(this->width());
+        auto h = static_cast<float>(this->height());
+
+        auto xs = w / width;
+        auto ys = h / height;
+
+        auto scale = std::min(xs, ys);
+        auto ox = ((w / scale) - width) / 2;
+        auto oy = ((h / scale) - height) / 2;
+
+        painter.scale(scale, scale);
+        painter.translate(egt::PointF(ox, oy));
+
+        painter.line_width(1.0 / scale);
+
+        painter.set(egt::Font("Lato", 0.65, egt::Font::Weight::bold));
+
+        painter.scale(1, -1);
+        painter.translate(egt::PointF(0, -height));
+    }
+
     b2World* world ;
-    cairo_matrix_t matrix ;
     std::vector<Hooman*> hoomans ;
-    double width, height ;
-    double xTranslation ;
 };
 
 int main(int argc, char** argv)

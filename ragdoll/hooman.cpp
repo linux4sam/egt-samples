@@ -233,7 +233,7 @@ b2Joint* Hooman::createWeldJoint(b2Body* bodyA,
     return result;
 }
 
-void Hooman::render_to_cairo(cairo_t* cr, bool blackout)
+void Hooman::render(egt::Painter& painter, bool blackout)
 {
     for (auto i = bodies.begin();
          i != bodies.end();
@@ -246,26 +246,29 @@ void Hooman::render_to_cairo(cairo_t* cr, bool blackout)
         b2Vec2 position = body->GetPosition();
         float32 angle = body->GetAngle();
 
-        cairo_save(cr);
-        cairo_translate(cr, position(0), position(1));
-        cairo_rotate(cr, angle);
+        egt::Painter::AutoSaveRestore sr(painter);
+
+        painter.translate(egt::PointF(position(0), position(1)));
+        painter.rotate(angle);
 
         if (blackout)
         {
-            cairo_rectangle(cr, -size(0) / 2.0 - .1, -size(1) / 2.0 - .1,
-                            size(0) + .2, size(1) + .2);
-            cairo_set_source_rgb(cr, 0, 0, 0);
-            cairo_fill(cr);
+            painter.rectangle(egt::RectF(-size(0) / 2.0 - .1, -size(1) / 2.0 - .1,
+                                         size(0) + .2, size(1) + .2));
+            painter.source(egt::Palette::black);
+            painter.fill();
         }
         else
         {
-            cairo_rectangle(cr, -size(0) / 2.0, -size(1) / 2.0,
-                            size(0), size(1));
-            cairo_set_source_rgba(cr, rr * 0.9, gg * 0.9, bb * 0.9, 0.9);
-            cairo_fill_preserve(cr);
-            cairo_set_source_rgba(cr, rr, gg, bb, 0.9);
-            cairo_stroke(cr);
+            egt::RectF rect(-size(0) / 2.0, -size(1) / 2.0, size(0), size(1));
+
+            painter.rectangle(rect);
+            painter.source(egt::Color::rgbaf(rr * 0.9, gg * 0.9, bb * 0.9, 0.9));
+            painter.fill();
+
+            painter.rectangle(rect);
+            painter.source(egt::Color::rgbaf(rr, gg, bb, 0.9));
+            painter.stroke();
         }
-        cairo_restore(cr);
     }
 }
