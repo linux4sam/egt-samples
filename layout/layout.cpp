@@ -294,16 +294,15 @@ public:
         m_canvas->special_child_draw_callback([](Painter & painter, Widget * widget)
         {
             Painter::AutoSaveRestore sr3(painter);
-            auto cr = painter.context().get();
             auto b = widget->box();
             b += Point(2 / 2., 2 / 2.);
             b -= Size(2, 2);
             painter.draw(b);
             painter.set(Palette::blue);
             static const double dashed[] = {1.0};
-            cairo_set_dash(cr, dashed, 1, 0);
+            painter.set_dash(dashed, 1, 0);
             painter.line_width(2);
-            cairo_stroke(cr);
+            painter.stroke();
         });
 
         m_form = make_shared<Form>("Properties");
