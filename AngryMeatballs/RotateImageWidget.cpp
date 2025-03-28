@@ -7,7 +7,6 @@
 
 #include <Box2D/Box2D.h>
 #include <RotateImageWidget.h>
-#include <cairo.h>
 #include <egt/ui>
 
 using namespace egt;
@@ -38,8 +37,6 @@ void RotateImageWidget::angle(double angle)
 
 void RotateImageWidget::draw(Painter& painter, const Rect&)
 {
-	auto cr = painter.context().get();
-
 	Point drawPoint1(center());
 	drawPoint1.x(drawPoint1.x() - m_shapeSize.width() / 2);
 	drawPoint1.y(drawPoint1.y() - m_shapeSize.height() / 2);
@@ -48,21 +45,22 @@ void RotateImageWidget::draw(Painter& painter, const Rect&)
 	drawPoint2.y(drawPoint2.y() + m_shapeSize.height() / 2);
 
 	// draw the rotate image
-	cairo_save(cr);
+	{
+		Painter::AutoSaveRestore sr(painter);
 
-	cairo_translate(cr, center().x(), center().y());
-	cairo_rotate(cr, m_angle);
-	cairo_set_source_surface(cr, m_image.surface().get(), -(m_shapeSize.width() / 2), -(m_shapeSize.height() / 2));
-	cairo_paint(cr);
-
-	cairo_restore(cr);
+		painter.translate(center());
+		painter.rotate(m_angle);
+		painter.source(m_image, Point(-(m_shapeSize.width() / 2), -(m_shapeSize.height() / 2)));
+		painter.paint();
+	}
 
 	if (m_drawBox)
 	{
+		Painter::AutoSaveRestore sr(painter);
+
 		// Draw a bounding box to help identify issues
-		cairo_save(cr);
-		cairo_translate(cr, center().x(), center().y());
-		cairo_rotate(cr, m_angle);
+		painter.translate(center());
+		painter.rotate(m_angle);
 
 		Rect drawbox(Point(), m_shapeSize);
 		drawbox.x(drawbox.x() - m_shapeSize.width() / 2);
@@ -75,6 +73,5 @@ void RotateImageWidget::draw(Painter& painter, const Rect&)
                                  Palette::transparent,
                                  theme().default_border());
 
-		cairo_restore(cr);
 	}
 }
