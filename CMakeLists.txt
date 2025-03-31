@@ -2,11 +2,11 @@ cmake_minimum_required(VERSION 3.23)
 
 project(
     egt-samples
-    VERSION 1.6
+    VERSION 1.7
     DESCRIPTION "Some examples of applications built with the EGT library."
     LANGUAGES CXX
 )
-#set(PROJECT_VERSION_RC 1)
+set(PROJECT_VERSION_RC 1)
 if (DEFINED PROJECT_VERSION_RC)
     string(APPEND PROJECT_VERSION "-rc${PROJECT_VERSION_RC}")
 endif()
@@ -20,7 +20,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 find_package(PkgConfig REQUIRED)
 
-pkg_check_modules(LIBEGT REQUIRED libegt>=1.10)
+pkg_check_modules(LIBEGT REQUIRED libegt>=1.11-rc1)
 
 CHECK_INCLUDE_FILE_CXX(egt/network/http.h HAVE_EGT_NETWORK_HTTP_H)
 CHECK_INCLUDE_FILE_CXX(egt/video.h HAVE_EGT_VIDEO_H)
