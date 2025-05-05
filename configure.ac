@@ -1,5 +1,5 @@
 AC_PREREQ([2.69])
-AC_INIT([egt-samples],[1.7-rc1])
+AC_INIT([egt-samples],[1.7])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([Makefile.am])
 AC_CONFIG_MACRO_DIR([m4])
@@ -48,7 +48,7 @@ if test x"$enable_rtti" = x"no"; then
   CXXFLAGS="$CXXFLAGS -fno-rtti"
 fi
 
-PKG_CHECK_MODULES(LIBEGT, [libegt >= 1.11-rc1], [], [
+PKG_CHECK_MODULES(LIBEGT, [libegt >= 1.11], [], [
    AC_MSG_ERROR(libegt not found.  This is required.)
 ])
 
